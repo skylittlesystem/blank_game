@@ -66,7 +66,7 @@ void r_ssheet_2_op(
 void r_ssheet_anim_2_op(
 		struct r_renderer* R,
 		unsigned ssheet_id,
-		unsigned t,
+		unsigned long t,
 		struct r_op* op
 		);
 
