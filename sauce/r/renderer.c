@@ -25,9 +25,13 @@
 #include <SDL_image.h>
 #include "renderer.h"
 
+#define WINDOW_W 320
+#define WINDOW_H 240
+#define WINDOW_SCALE 4
+
 #define R_SDL_WINDOW_TITLE "!!!11!1!!1ONE!!"
-#define R_SDL_WINDOW_W 1024
-#define R_SDL_WINDOW_H 768
+#define R_SDL_WINDOW_W (WINDOW_SCALE * WINDOW_W)
+#define R_SDL_WINDOW_H (WINDOW_SCALE * WINDOW_H)
 
 void r_op_exe(struct r_op* op)
 {
@@ -51,9 +55,6 @@ void r_ssheet_2_op(
 		)
 {
 	struct r_ssheet* ssheet;
-
-	/* TODO: handling? */
-	assert (!op->sdl_renderer || op->sdl_renderer == R->sdl_renderer);
 
 	op->sdl_renderer = R->sdl_renderer;
 
@@ -155,4 +156,5 @@ void r_renderer_init(struct r_renderer* R)
 
 	r_ssheet_load(R, 0, "ailin_ssheet.png", 64, 64);
 
+	SDL_RenderSetScale(R->sdl_renderer, WINDOW_SCALE, WINDOW_SCALE);
 }
