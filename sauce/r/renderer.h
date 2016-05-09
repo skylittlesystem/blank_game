@@ -24,6 +24,9 @@
 #ifndef HAS_R_RENDERER_H
 #define HAS_R_RENDERER_H
 
+#define R_WINDOW_W 320
+#define R_WINDOW_H 240
+
 #include <SDL.h>
 
 struct r_ssheet
@@ -50,8 +53,15 @@ struct r_op
 	SDL_Rect sdl_dstrect;
 };
 
+enum
+{
+	R_SS_NAUGHT = 0,
+	R_SS_AILIN,
+	R_SS_LEVEL_CLARICE,
+	R_SS_BOMB,
+};
+
 #define r_get_ssheet(R, id) (&(R)->ssheet_v[(id)])
-/*#define r_get_g_type_ssheet(type) ((R)->g_type_ssheet_v[(type)])*/
 
 void r_op_exe(struct r_op* op);
 

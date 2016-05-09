@@ -25,6 +25,7 @@ LD := $(LD) $(LDFLAGS)
 #
 OBJ := \
 	build/r/renderer.o \
+	build/r/game.o \
 	build/ui/interface.o \
 	build/ui/window.o \
 	build/g/game.o \

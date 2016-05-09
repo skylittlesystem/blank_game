@@ -25,13 +25,10 @@
 #include <SDL_image.h>
 #include "renderer.h"
 
-#define WINDOW_W 320
-#define WINDOW_H 240
 #define WINDOW_SCALE 4
-
 #define R_SDL_WINDOW_TITLE "!!!11!1!!1ONE!!"
-#define R_SDL_WINDOW_W (WINDOW_SCALE * WINDOW_W)
-#define R_SDL_WINDOW_H (WINDOW_SCALE * WINDOW_H)
+#define R_SDL_WINDOW_W (WINDOW_SCALE * R_WINDOW_W)
+#define R_SDL_WINDOW_H (WINDOW_SCALE * R_WINDOW_H)
 
 void r_op_exe(struct r_op* op)
 {
@@ -154,7 +151,10 @@ void r_renderer_init(struct r_renderer* R)
 
 	assert (R->sdl_renderer); /* FIXME: handle */
 
-	r_ssheet_load(R, 0, "ailin_ssheet.png", 64, 64);
+	/* TODO: decent resource handling */
+	r_ssheet_load(R, R_SS_AILIN, "ailin_ssheet.png", 64, 64);
+	r_ssheet_load(R, R_SS_LEVEL_CLARICE, "level_clarice_ssheet.png", 256, 64);
+	r_ssheet_load(R, R_SS_BOMB, "bomb_ssheet.png", 64, 64);
 
 	SDL_RenderSetScale(R->sdl_renderer, WINDOW_SCALE, WINDOW_SCALE);
 }

@@ -21,39 +21,59 @@
  *
  */
 
-#ifndef HAS_G_GAME_H
-#define HAS_G_GAME_H
+#include "game.h"
 
-#define G_MAX_ENTITIES 16
+/* pixels per world unit */
+#define PPWU 64
 
-enum g_type
+void r_g_entity_draw(struct r_renderer* R, struct g_game* G, unsigned id)
 {
-	G_NAUGHT = 0,
-	G_AILIN,
-	G_LEVEL_CLARICE,
-	G_BOMB,
-};
+	struct r_op op;
+	struct g_entity* e;
+	struct r_ssheet* ssheet;
+	unsigned ssheet_id;
 
-struct g_entity
+	e = g_get_entity(G, id);
+
+	switch (e->type)
+	{
+	case G_AILIN:
+		ssheet_id = R_SS_AILIN;
+		break;
+
+	case G_LEVEL_CLARICE:
+		ssheet_id = R_SS_LEVEL_CLARICE;
+		break;
+
+	case G_BOMB:
+		ssheet_id = R_SS_BOMB;
+		break;
+
+	default:
+		return;
+	}
+
+	ssheet = r_get_ssheet(R, ssheet_id);
+
+	r_ssheet_anim_2_op(R, ssheet_id, e->t, &op);
+	op.sdl_dstrect = (SDL_Rect)
+	{
+		(int) (R_WINDOW_W / 2 + e->pos[0] * PPWU - ssheet->sw / 2),
+		(int) (R_WINDOW_H / 2 + (-e->pos[1] * PPWU) - ssheet->sh / 2),
+		ssheet->sw,
+		ssheet->sh,
+	};
+
+	r_op_exe(&op);
+}
+
+void r_g_game_draw(
+		struct r_renderer* R,
+		struct g_game* G
+		)
 {
-	enum g_type type;
-	float pos[2];
-	float vel[2];
-	/* FIXME: perhaps this is kinda retarded? need sleep */
-	unsigned long t;
-};
+	unsigned i;
 
-struct g_game
-{
-	unsigned state;
-	struct g_entity entity_v[G_MAX_ENTITIES];
-};
-
-#define g_get_entity(G, id) (&(G)->entity_v[(id)])
-#define g_get_player_entity(G) g_get_entity((G), 0)
-
-void g_game_frame(struct g_game* G, unsigned long dt);
-void g_game_fini(struct g_game* G);
-void g_game_init(struct g_game* G);
-
-#endif
+	for (i = 0; i < G_MAX_ENTITIES; ++i)
+		r_g_entity_draw(R, G, i);
+}

@@ -38,6 +38,8 @@ void g_game_frame(struct g_game* G, unsigned long dt)
 		if (e == G_NAUGHT)
 			continue;
 
+		e->t += dt;
+
 		e->pos[0] += (e->vel[0] * dt) / 1000;
 		e->pos[1] += (e->vel[1] * dt) / 1000;
 	}
@@ -58,6 +60,16 @@ void g_game_init(struct g_game* G)
 
 	e = g_get_entity(G, 0);
 	e->type = G_AILIN;
-	e->pos[0] = 10;
-	e->pos[1] = 30;
+	e->pos[0] = -1;
+	e->pos[1] = 0;
+
+	e = g_get_entity(G, 1);
+	e->type = G_LEVEL_CLARICE;
+	e->pos[0] = 0;
+	e->pos[1] = -1.25;
+
+	e = g_get_entity(G, 2);
+	e->type = G_BOMB;
+	e->pos[0] = 1;
+	e->pos[1] = 0;
 }

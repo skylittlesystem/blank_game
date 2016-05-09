@@ -22,6 +22,7 @@
  */
 
 #include "window.h"
+#include "r/game.h"
 
 enum keybit
 {
@@ -70,44 +71,19 @@ void ui_process_keys(struct ui_window* win)
 	e = g_get_player_entity(win->G);
 
 	memset(e->vel, 0, sizeof (e->vel));
-#define V 256
+
+	/* FIXME: velocity should be capped by game */
+#define V .5
 	e->vel[0] += (win->keyv & KB_RIGHT) ?	 V : 0;
-	e->vel[1] += (win->keyv & KB_UP) ?	-V : 0;
-	e->vel[0] += (win->keyv & KB_LEFT) ?	-V : 0;
-	e->vel[1] += (win->keyv & KB_DOWN) ?	 V : 0;
+	e->vel[1] += (win->keyv & KB_UP) ?	 V : 0;
+	e->vel[0] += (win->keyv & KB_LEFT) ?	 -V : 0;
+	e->vel[1] += (win->keyv & KB_DOWN) ?	 -V : 0;
 #undef V
 }
 
 void ui_window_draw(struct ui_window* win, unsigned long dt)
 {
-	unsigned i;
-
-	// FIXME
-	static unsigned long t = 0;
-	t += dt;
-
-	for (i = 0; i < G_MAX_ENTITIES; ++i)
-	{
-		struct r_op op;
-		struct g_entity* e;
-		memset(&op, 0, sizeof (op));
-
-		e = g_get_entity(win->G, i);
-
-		if (e->type == G_NAUGHT)
-			continue;
-
-		r_ssheet_anim_2_op(&win->R, 0, t, &op);
-		op.sdl_dstrect = (SDL_Rect)
-		{
-			(int) e->pos[0],
-			(int) e->pos[1],
-			256,
-			256
-		};
-
-		r_op_exe(&op);
-	}
+	r_g_game_draw(&win->R, win->G);
 }
 
 void ui_window_frame(struct ui_window* win, unsigned long dt)
