@@ -152,9 +152,9 @@ void r_renderer_init(struct r_renderer* R)
 	assert (R->sdl_renderer); /* FIXME: handle */
 
 	/* TODO: decent resource handling */
-	r_ssheet_load(R, R_SS_AILIN, "ailin_ssheet.png", 64, 64);
-	r_ssheet_load(R, R_SS_LEVEL_CLARICE, "level_clarice_ssheet.png", 256, 64);
-	r_ssheet_load(R, R_SS_BOMB, "bomb_ssheet.png", 64, 64);
+	r_ssheet_load(R, R_SS_AILIN, "data/ailin_ssheet.png", 64, 64);
+	r_ssheet_load(R, R_SS_LEVEL_CLARICE, "data/level_clarice_ssheet.png", 256, 64);
+	r_ssheet_load(R, R_SS_BOMB, "data/bomb_ssheet.png", 64, 64);
 
 	SDL_RenderSetScale(R->sdl_renderer, WINDOW_SCALE, WINDOW_SCALE);
 }
