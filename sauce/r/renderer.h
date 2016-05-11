@@ -59,6 +59,8 @@ enum
 	R_SS_AILIN,
 	R_SS_LEVEL_CLARICE,
 	R_SS_BOMB,
+	R_SS_FIRE,
+	R_SS_PACSATAN,
 };
 
 #define r_get_ssheet(R, id) (&(R)->ssheet_v[(id)])

@@ -25,24 +25,45 @@
 #include <string.h>
 #include "game.h"
 
+#include <math.h>
+
 void g_game_frame(struct g_game* G, unsigned long dt)
 {
 	unsigned i;
+	struct g_entity* e1, * e2;
+	float* p1, * p2, d[2];
 
 	for (i = 0; i < G_MAX_ENTITIES; ++i)
 	{
-		struct g_entity* e;
+		e1 = g_get_entity(G, i);
 
-		e = g_get_entity(G, i);
-
-		if (e == G_NAUGHT)
+		if (e1 == G_NAUGHT)
 			continue;
 
-		e->t += dt;
+		e1->t += dt;
 
-		e->pos[0] += (e->vel[0] * dt) / 1000;
-		e->pos[1] += (e->vel[1] * dt) / 1000;
+		e1->pos[0] += (e1->vel[0] * dt) / 1000;
+		e1->pos[1] += (e1->vel[1] * dt) / 1000;
 	}
+
+	e1 = g_get_entity(G, 0);
+	e2 = g_get_entity(G, 2);
+	p1 = e1->pos;
+	p2 = e2->pos;
+#define sqr(x) ((x) * (x))
+
+	d[0] = p1[0] - p2[0];
+	d[1] = p1[1] - p2[1];
+	float dist = sqrt(sqr(d[0]) + sqr(d[1]));
+
+	e2->vel[0] = d[0] / dist * .2;
+	e2->vel[1] = d[1] / dist * .2;
+
+
+	if (dist <= .5)
+		G->gameover = true;
+
+#undef sqr
 }
 
 void g_game_fini(struct g_game* G)
@@ -58,6 +79,8 @@ void g_game_init(struct g_game* G)
 
 	memset(G, 0, sizeof (*G));
 
+	G->gameover = false;
+
 	e = g_get_entity(G, 0);
 	e->type = G_AILIN;
 	e->pos[0] = -1;
@@ -69,7 +92,7 @@ void g_game_init(struct g_game* G)
 	e->pos[1] = -1.25;
 
 	e = g_get_entity(G, 2);
-	e->type = G_BOMB;
+	e->type = G_PACSATAN;
 	e->pos[0] = 1;
 	e->pos[1] = 0;
 }

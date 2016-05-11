@@ -24,6 +24,8 @@
 #ifndef HAS_G_GAME_H
 #define HAS_G_GAME_H
 
+#include <stdbool.h>
+
 #define G_MAX_ENTITIES 16
 
 enum g_type
@@ -32,6 +34,8 @@ enum g_type
 	G_AILIN,
 	G_LEVEL_CLARICE,
 	G_BOMB,
+	G_FIRE,
+	G_PACSATAN,
 };
 
 struct g_entity
@@ -46,6 +50,7 @@ struct g_entity
 struct g_game
 {
 	unsigned state;
+	bool gameover;
 	struct g_entity entity_v[G_MAX_ENTITIES];
 };
 

@@ -49,6 +49,14 @@ void r_g_entity_draw(struct r_renderer* R, struct g_game* G, unsigned id)
 		ssheet_id = R_SS_BOMB;
 		break;
 
+	case G_FIRE:
+		ssheet_id = R_SS_FIRE;
+		break;
+
+	case G_PACSATAN:
+		ssheet_id = R_SS_PACSATAN;
+		break;
+
 	default:
 		return;
 	}

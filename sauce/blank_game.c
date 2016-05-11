@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 		ui_interface_frame(&teh_interface, dt);
 
 		t1 = t2;
-	} while (!teh_interface.should_quit);
+	} while (!(teh_interface.should_quit || teh_game.gameover));
 
 	ui_interface_fini(&teh_interface);
 	g_game_fini(&teh_game);

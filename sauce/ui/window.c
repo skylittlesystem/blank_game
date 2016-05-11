@@ -51,14 +51,15 @@ static unsigned char keycode_2_keybit(SDL_Keycode sym)
 
 void ui_window_event(struct ui_window* win, SDL_Event* e)
 {
+	unsigned char bit = keycode_2_keybit(e->key.keysym.sym);
 	switch (e->type)
 	{
 	case SDL_KEYUP:
-		win->keyv = win->keyv & (~keycode_2_keybit(e->key.keysym.sym));
+		win->keyv &= ~bit;
 		return;
 
 	case SDL_KEYDOWN:
-		win->keyv |= keycode_2_keybit(e->key.keysym.sym);
+		win->keyv |= bit;
 		return;
 	}
 	
