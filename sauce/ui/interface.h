@@ -26,10 +26,12 @@
 
 #include <stdbool.h>
 #include "window.h"
+#include "mix/er.h"
 
 struct ui_interface
 {
 	struct ui_window win;
+	struct mix_er mixer;
 	bool should_quit;
 };
 
