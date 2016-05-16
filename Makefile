@@ -3,26 +3,25 @@
 #
 
 CC := gcc
+CFLAGS := \
+	-Isauce \
+	`sdl2-config --cflags` \
+	-std=c99 \
+	-Wall \
+	-pipe \
+	-ggdb \
+	$(CFLAGS)
+
 LD := gcc
-CFLAGS := -std=c99 -Wall -pipe -ggdb
-LDFLAGS := -lm
+LDFLAGS := \
+	-lm \
+	`sdl2-config --libs` \
+	-lSDL2_image \
+	-lSDL2_mixer \
+	$(LDFLAGS)
 
-SDL2_CFLAGS := `sdl2-config --cflags`
-SDL2_LIBS := `sdl2-config --libs` -lSDL2_image -lSDL2_mixer
+LD := $(LD)
 
-CFLAGS := -Isauce -Ibuild/renderer/shaders $(SDL2_CFLAGS) $(CFLAGS)
-LDFLAGS := $(SDL2_LIBS) $(LDFLAGS)
-
-CC := $(CC) $(CFLAGS)
-LD := $(LD) $(LDFLAGS)
-
-#
-# 3rd party lib objects
-#
-
-#
-# engine objects
-#
 OBJ := \
 	build/r/renderer.o \
 	build/r/game.o \
@@ -32,24 +31,16 @@ OBJ := \
 	build/g/game.o \
 	build/blank_game.o \
 
-#
-# programs
-#
-
 PRG := \
 	build/blank_game \
 
-#
-# targets
-#
-
 build/%.o: sauce/%.c
 	mkdir -p `dirname $@`
-	$(CC) -o $@ -c $<
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(PRG): $(OBJ)
 	mkdir -p `dirname $@`
-	$(LD) -o $@ $^
+	$(LD) $(LDFLAGS) -o $@ $^
 
 .PHONY: all clean
 
