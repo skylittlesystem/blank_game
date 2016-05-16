@@ -29,6 +29,7 @@ OBJ := \
 	build/ui/interface.o \
 	build/ui/window.o \
 	build/g/game.o \
+	build/misc/sblas3.o \
 	build/blank_game.o \
 
 PRG := \

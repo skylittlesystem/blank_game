@@ -83,16 +83,22 @@ void g_game_init(struct g_game* G)
 
 	e = g_get_entity(G, 0);
 	e->type = G_AILIN;
+	e->vel[2] = 1;
 	e->pos[0] = -1;
 	e->pos[1] = 0;
+	e->pos[2] = 1;
 
 	e = g_get_entity(G, 1);
 	e->type = G_LEVEL_CLARICE;
+	e->vel[2] = 1;
 	e->pos[0] = 0;
 	e->pos[1] = -1.25;
+	e->pos[2] = 1;
 
 	e = g_get_entity(G, 2);
 	e->type = G_PACSATAN;
+	e->vel[2] = 1;
 	e->pos[0] = 1;
 	e->pos[1] = 0;
+	e->pos[2] = 1;
 }

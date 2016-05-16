@@ -21,44 +21,20 @@
  *
  */
 
-#ifndef HAS_G_GAME_H
-#define HAS_G_GAME_H
+#ifndef HAS_SBLAS3_H
+#define HAS_SBLAS3_H
 
-#include <stdbool.h>
+typedef float vec;
 
-#define G_MAX_ENTITIES 16
-
-enum g_type
-{
-	G_NAUGHT = 0,
-	G_AILIN,
-	G_LEVEL_CLARICE,
-	G_BOMB,
-	G_FIRE,
-	G_PACSATAN,
-};
-
-struct g_entity
-{
-	enum g_type type;
-	float pos[3];
-	float vel[3];
-	/* FIXME: perhaps this is kinda retarded? need sleep */
-	unsigned long t;
-};
-
-struct g_game
-{
-	unsigned state;
-	bool gameover;
-	struct g_entity entity_v[G_MAX_ENTITIES];
-};
-
-#define g_get_entity(G, id) (&(G)->entity_v[(id)])
-#define g_get_player_entity(G) g_get_entity((G), 0)
-
-void g_game_frame(struct g_game* G, unsigned long dt);
-void g_game_fini(struct g_game* G);
-void g_game_init(struct g_game* G);
+vec dot3(vec* restrict x, vec* restrict y);
+void axpy3(vec alpha, vec* restrict x, vec* restrict y);
+void scal3(vec alpha, vec* restrict x);
+void gemv3(
+		vec alpha,
+		vec* restrict A,
+		vec* restrict x,
+		vec beta,
+		vec* restrict y
+	    );
 
 #endif

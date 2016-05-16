@@ -22,9 +22,22 @@
  */
 
 #include "game.h"
+#include "misc/sblas3.h"
 
-/* pixels per world unit */
-#define PPWU 64
+#define X (((float) R_WINDOW_W) / 2)
+#define Y (((float) R_WINDOW_H) / 2)
+#define S (((float) R_WINDOW_W) / 5) 
+
+float projection_matrix[] =
+{
+	 S,  0,  0,
+	 0, -S,  0,
+	 X,  Y,  1,
+};
+
+#undef S
+#undef Y
+#undef X
 
 void r_g_entity_draw(struct r_renderer* R, struct g_game* G, unsigned id)
 {
@@ -63,11 +76,15 @@ void r_g_entity_draw(struct r_renderer* R, struct g_game* G, unsigned id)
 
 	ssheet = r_get_ssheet(R, ssheet_id);
 
+	float pos[3];
+
+	gemv3(1, projection_matrix, e->pos, 0, pos);
+
 	r_ssheet_anim_2_op(R, ssheet_id, e->t, &op);
 	op.sdl_dstrect = (SDL_Rect)
 	{
-		(int) (R_WINDOW_W / 2 + e->pos[0] * PPWU - ssheet->sw / 2),
-		(int) (R_WINDOW_H / 2 + (-e->pos[1] * PPWU) - ssheet->sh / 2),
+		((int) pos[0]) - ssheet->sw/2,
+		((int) pos[1]) - ssheet->sh/2,
 		ssheet->sw,
 		ssheet->sh,
 	};

@@ -21,44 +21,49 @@
  *
  */
 
-#ifndef HAS_G_GAME_H
-#define HAS_G_GAME_H
+#include "sblas3.h"
 
-#include <stdbool.h>
-
-#define G_MAX_ENTITIES 16
-
-enum g_type
+vec dot3(vec* restrict x, vec* restrict y)
 {
-	G_NAUGHT = 0,
-	G_AILIN,
-	G_LEVEL_CLARICE,
-	G_BOMB,
-	G_FIRE,
-	G_PACSATAN,
-};
+	register unsigned i;
+	register vec dot = 0;
 
-struct g_entity
+	for (i = 0; i < 3; ++i)
+		dot += x[i] * y[i];
+
+	return dot;
+}
+
+void axpy3(vec alpha, vec* restrict x, vec* restrict y)
 {
-	enum g_type type;
-	float pos[3];
-	float vel[3];
-	/* FIXME: perhaps this is kinda retarded? need sleep */
-	unsigned long t;
-};
+	register unsigned i;
 
-struct g_game
+	for (i = 0; i < 3; ++i)
+		y[i] += alpha * x[i];
+}
+
+void scal3(vec alpha, vec* restrict x)
 {
-	unsigned state;
-	bool gameover;
-	struct g_entity entity_v[G_MAX_ENTITIES];
-};
+	register unsigned i;
 
-#define g_get_entity(G, id) (&(G)->entity_v[(id)])
-#define g_get_player_entity(G) g_get_entity((G), 0)
+	for (i = 0; i < 3; ++i)
+		x[i] *= alpha;
+}
 
-void g_game_frame(struct g_game* G, unsigned long dt);
-void g_game_fini(struct g_game* G);
-void g_game_init(struct g_game* G);
+void gemv3(
+		vec alpha,
+		vec* restrict A,
+		vec* restrict x,
+		vec beta,
+		vec* restrict y
+	    )
+{
+	register unsigned i, j;
 
-#endif
+	for (i = 0; i < 3; ++i)
+	{
+		y[i] = beta * y[i];
+		for (j = 0; j < 3; ++j)
+			y[i] += alpha * A[i + 3 * j] * x[j];
+	}
+}
