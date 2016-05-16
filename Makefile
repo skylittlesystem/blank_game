@@ -35,6 +35,13 @@ OBJ := \
 PRG := \
 	build/blank_game \
 
+.PHONY: all clean
+
+all: $(PRG)
+
+clean:
+	rm -f $(OBJ) $(PRG)
+
 build/%.o: sauce/%.c
 	mkdir -p `dirname $@`
 	$(CC) $(CFLAGS) -o $@ -c $<
@@ -42,10 +49,3 @@ build/%.o: sauce/%.c
 $(PRG): $(OBJ)
 	mkdir -p `dirname $@`
 	$(LD) $(LDFLAGS) -o $@ $^
-
-.PHONY: all clean
-
-clean:
-	rm -f $(OBJ) $(PRG)
-
-all: $(PRG)
