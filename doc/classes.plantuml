@@ -135,9 +135,9 @@ namespace r {
 		#sdl_renderer
 		-ssheet_v[]
 		-ssanim_v[]
-		-modelview_matrix_q[]
-		#modelview_matrix_q_head
-		-modelview_matrix_q_tail
+		-modelview_matrix_v[]
+		#modelview_matrix_v_top
+		-modelview_matrix_v_bottom
 		#projection_matrix
 		+matrix(m)
 		+mult_matrix(m)
