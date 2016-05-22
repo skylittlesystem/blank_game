@@ -1,9 +1,9 @@
 #include <assert.h>
 #include <SDL.h>
 
-#include "er.h"
+#include "ixer.h"
 
-void mix_er_fini(struct mix_er* mixer)
+void m_ixer_fini(struct m_ixer* mixer)
 {
 	Mix_Music** m;
 	m = mix_get_music(mixer, 0);	
@@ -14,7 +14,7 @@ void mix_er_fini(struct mix_er* mixer)
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 }
 
-static void load_mus(struct mix_er* mixer, unsigned id, const char* s)
+static void load_mus(struct m_ixer* mixer, unsigned id, const char* s)
 {
 	Mix_Music** m;
 	m = mix_get_music(mixer, id);
@@ -22,7 +22,7 @@ static void load_mus(struct mix_er* mixer, unsigned id, const char* s)
 	assert (*m);
 }
 
-void mix_er_init(struct mix_er* mixer)
+void m_ixer_init(struct m_ixer* mixer)
 {
 	assert (SDL_Init(SDL_INIT_AUDIO) == 0);
 

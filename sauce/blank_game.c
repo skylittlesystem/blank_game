@@ -25,11 +25,10 @@
 #include <stdio.h>
 #include <SDL.h>
 
-#include "g/game.h"
-#include "r/renderer.h"
+#include "g/ame.h"
 #include "ui/interface.h"
 
-static struct g_game teh_game;
+static struct g_ame teh_game;
 static struct ui_interface teh_interface;
 
 /*
@@ -40,7 +39,7 @@ int main(int argc, char *argv[])
 {
 	unsigned long t1, t2, dt;
 
-	g_game_init(&teh_game);
+	g_ame_init(&teh_game);
 	ui_interface_init(&teh_interface, &teh_game);
 
 	t1 = SDL_GetTicks();
@@ -48,14 +47,14 @@ int main(int argc, char *argv[])
 		t2 = SDL_GetTicks();
 		dt = t2 - t1;
 
-		g_game_frame(&teh_game, dt);
+		g_ame_frame(&teh_game, dt);
 		ui_interface_frame(&teh_interface, dt);
 
 		t1 = t2;
 	} while (!(teh_interface.should_quit || teh_game.gameover));
 
 	ui_interface_fini(&teh_interface);
-	g_game_fini(&teh_game);
+	g_ame_fini(&teh_game);
 
 	SDL_Quit();
 

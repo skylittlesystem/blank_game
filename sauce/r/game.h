@@ -24,18 +24,18 @@
 #ifndef HAVE_R_GAME_H
 #define HAVE_R_GAME_H
 
-#include "renderer.h"
-#include "g/game.h"
+#include "enderer.h"
+#include "g/ame.h"
 
 void r_g_entity_draw(
-		struct r_renderer* R,
-		struct g_game* G,
+		struct r_enderer* R,
+		struct g_ame* G,
 		unsigned entity_id
 		);
 
-void r_g_game_draw(
-		struct r_renderer* R,
-		struct g_game* G
+void r_g_ame_draw(
+		struct r_enderer* R,
+		struct g_ame* G
 		);
 
 #endif

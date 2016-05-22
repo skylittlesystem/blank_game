@@ -23,7 +23,7 @@
 
 #include <assert.h>
 #include <SDL_image.h>
-#include "renderer.h"
+#include "enderer.h"
 
 #define WINDOW_SCALE 4
 #define R_SDL_WINDOW_TITLE "!!!11!1!!1ONE!!"
@@ -44,7 +44,7 @@ void r_op_exe(struct r_op* op)
 }
 
 void r_ssheet_2_op(
-		struct r_renderer* R,
+		struct r_enderer* R,
 		unsigned ssheet_id,
 		unsigned i,
 		unsigned j,
@@ -71,7 +71,7 @@ void r_ssheet_2_op(
 }
 
 void r_ssheet_anim_2_op(
-		struct r_renderer* R,
+		struct r_enderer* R,
 		unsigned ssheet_id,
 		unsigned long t,
 		struct r_op* op
@@ -89,7 +89,7 @@ void r_ssheet_anim_2_op(
 }
 
 void r_ssheet_load(
-		struct r_renderer* R,
+		struct r_enderer* R,
 		unsigned ssheet_id,
 		char* path,
 		unsigned sw,
@@ -114,25 +114,25 @@ void r_ssheet_load(
 	ssheet->n = surf->w / sw;
 }
 
-void r_renderer_clear(struct r_renderer* R)
+void r_enderer_clear(struct r_enderer* R)
 {
 	SDL_SetRenderDrawColor(R->sdl_renderer, 168, 230, 255, 255);
 	SDL_RenderClear(R->sdl_renderer);
 }
 
-void r_renderer_present(struct r_renderer* R)
+void r_enderer_present(struct r_enderer* R)
 {
 	SDL_RenderPresent(R->sdl_renderer);
 }
 
-void r_renderer_fini(struct r_renderer* R)
+void r_enderer_fini(struct r_enderer* R)
 {
 	SDL_DestroyRenderer(R->sdl_renderer);
 	SDL_DestroyWindow(R->sdl_window);
 	SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
 
-void r_renderer_init(struct r_renderer* R)
+void r_enderer_init(struct r_enderer* R)
 {
 	assert(SDL_InitSubSystem(SDL_INIT_VIDEO) == 0);
 

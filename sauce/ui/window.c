@@ -84,24 +84,24 @@ void ui_process_keys(struct ui_window* win)
 
 void ui_window_draw(struct ui_window* win, unsigned long dt)
 {
-	r_g_game_draw(&win->R, win->G);
+	r_g_ame_draw(&win->R, win->G);
 }
 
 void ui_window_frame(struct ui_window* win, unsigned long dt)
 {
-	r_renderer_clear(&win->R);
+	r_enderer_clear(&win->R);
 	ui_process_keys(win);
 	ui_window_draw(win, dt);
-	r_renderer_present(&win->R);
+	r_enderer_present(&win->R);
 }
 
 void ui_window_fini(struct ui_window* win)
 {
-	r_renderer_fini(&win->R);
+	r_enderer_fini(&win->R);
 }
 
-void ui_window_init(struct ui_window* win, struct g_game* G)
+void ui_window_init(struct ui_window* win, struct g_ame* G)
 {
-	r_renderer_init(&win->R);
+	r_enderer_init(&win->R);
 	win->G = G;
 }

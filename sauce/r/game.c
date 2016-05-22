@@ -39,7 +39,7 @@ float projection_matrix[] =
 #undef Y
 #undef X
 
-void r_g_entity_draw(struct r_renderer* R, struct g_game* G, unsigned id)
+void r_g_entity_draw(struct r_enderer* R, struct g_ame* G, unsigned id)
 {
 	struct r_op op;
 	struct g_entity* e;
@@ -92,9 +92,9 @@ void r_g_entity_draw(struct r_renderer* R, struct g_game* G, unsigned id)
 	r_op_exe(&op);
 }
 
-void r_g_game_draw(
-		struct r_renderer* R,
-		struct g_game* G
+void r_g_ame_draw(
+		struct r_enderer* R,
+		struct g_ame* G
 		)
 {
 	unsigned i;

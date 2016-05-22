@@ -54,13 +54,13 @@ void ui_interface_frame(struct ui_interface* ui, unsigned long dt)
 
 void ui_interface_fini(struct ui_interface* ui)
 {
-	mix_er_init(&ui->mixer);
+	m_ixer_init(&ui->mixer);
 	ui_window_fini(&ui->win);
 }
 
-void ui_interface_init(struct ui_interface* ui, struct g_game* G)
+void ui_interface_init(struct ui_interface* ui, struct g_ame* G)
 {
 	ui_window_init(&ui->win, G);
 	ui->should_quit = false;
-	mix_er_init(&ui->mixer);
+	m_ixer_init(&ui->mixer);
 }

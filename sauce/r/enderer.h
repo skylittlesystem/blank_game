@@ -21,8 +21,8 @@
  *
  */
 
-#ifndef HAS_R_RENDERER_H
-#define HAS_R_RENDERER_H
+#ifndef HAS_R_ENDERER_H
+#define HAS_R_ENDERER_H
 
 #define R_WINDOW_W 320
 #define R_WINDOW_H 240
@@ -38,7 +38,7 @@ struct r_ssheet
 
 #define R_SSHEET_ANIM_FPS 24
 
-struct r_renderer
+struct r_enderer
 {
 	SDL_Window* sdl_window;
 	SDL_Renderer* sdl_renderer;
@@ -68,7 +68,7 @@ enum
 void r_op_exe(struct r_op* op);
 
 void r_ssheet_2_op(
-		struct r_renderer* R,
+		struct r_enderer* R,
 		unsigned ssheet_id,
 		unsigned i,
 		unsigned j,
@@ -76,24 +76,24 @@ void r_ssheet_2_op(
 		);
 
 void r_ssheet_anim_2_op(
-		struct r_renderer* R,
+		struct r_enderer* R,
 		unsigned ssheet_id,
 		unsigned long t,
 		struct r_op* op
 		);
 
 void r_ssheet_load(
-		struct r_renderer* R,
+		struct r_enderer* R,
 		unsigned ssheet_id,
 		char* path,
 		unsigned sw,
 		unsigned sh
 		);
 
-void r_renderer_clear(struct r_renderer* R);
-void r_renderer_present(struct r_renderer* R);
+void r_enderer_clear(struct r_enderer* R);
+void r_enderer_present(struct r_enderer* R);
 
-void r_renderer_fini(struct r_renderer* R);
-void r_renderer_init(struct r_renderer* R);
+void r_enderer_fini(struct r_enderer* R);
+void r_enderer_init(struct r_enderer* R);
 
 #endif

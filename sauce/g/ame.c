@@ -23,11 +23,11 @@
 
 #include <assert.h>
 #include <string.h>
-#include "game.h"
+#include "ame.h"
 
 #include <math.h>
 
-void g_game_frame(struct g_game* G, unsigned long dt)
+void g_ame_frame(struct g_ame* G, unsigned long dt)
 {
 	unsigned i;
 	struct g_entity* e1, * e2;
@@ -66,12 +66,12 @@ void g_game_frame(struct g_game* G, unsigned long dt)
 #undef sqr
 }
 
-void g_game_fini(struct g_game* G)
+void g_ame_fini(struct g_ame* G)
 {
 	assert (G);
 }
 
-void g_game_init(struct g_game* G)
+void g_ame_init(struct g_ame* G)
 {
 	struct g_entity* e;
 

@@ -21,8 +21,8 @@
  *
  */
 
-#ifndef HAS_G_GAME_H
-#define HAS_G_GAME_H
+#ifndef HAS_G_AME_H
+#define HAS_G_AME_H
 
 #include <stdbool.h>
 
@@ -47,7 +47,7 @@ struct g_entity
 	unsigned long t;
 };
 
-struct g_game
+struct g_ame
 {
 	unsigned state;
 	bool gameover;
@@ -57,8 +57,8 @@ struct g_game
 #define g_get_entity(G, id) (&(G)->entity_v[(id)])
 #define g_get_player_entity(G) g_get_entity((G), 0)
 
-void g_game_frame(struct g_game* G, unsigned long dt);
-void g_game_fini(struct g_game* G);
-void g_game_init(struct g_game* G);
+void g_ame_frame(struct g_ame* G, unsigned long dt);
+void g_ame_fini(struct g_ame* G);
+void g_ame_init(struct g_ame* G);
 
 #endif

@@ -26,18 +26,18 @@
 
 #include <stdbool.h>
 #include "window.h"
-#include "mix/er.h"
+#include "m/ixer.h"
 
 struct ui_interface
 {
 	struct ui_window win;
-	struct mix_er mixer;
+	struct m_ixer mixer;
 	bool should_quit;
 };
 
 void ui_interface_poll_event(struct ui_interface* ui);
 void ui_interface_frame(struct ui_interface* ui, unsigned long dt);
 void ui_interface_fini(struct ui_interface* ui);
-void ui_interface_init(struct ui_interface* ui, struct g_game* G);
+void ui_interface_init(struct ui_interface* ui, struct g_ame* G);
 
 #endif
