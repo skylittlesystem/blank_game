@@ -1,0 +1,171 @@
+@startuml
+
+namespace za {
+	interface jojo {
+		+on_wryyy(wryyy)
+	}
+
+	jojo ..> wryyy
+
+	abstract class muda {
+		+type
+	}
+
+	muda --> "1" jojo
+
+	class boxxy {
+		+is_solid
+		+boxxy
+		+vel
+	}
+
+	muda <|-- boxxy
+
+	class bsp {
+		...
+	}
+
+	muda <|-- bsp
+
+	class wryyy {
+		+sauce_id
+		+dest_id
+	}
+
+	wryyy --> "2" muda
+
+	class warudo {
+		-muda_v[]
+		+get_muda(id)
+		+frame(dt)
+	}
+
+	warudo *-- "*" muda
+}
+
+namespace g {
+	namespace e {
+		abstract class ntity {
+			+type
+			+get_muda()
+			#frame(dt)
+		}
+
+		za.jojo <|.. ntity
+		ntity --> "1" za.muda
+
+		ntity <|-- ailin
+		ntity <|-- level_clarice
+		ntity <|-- pacsatan
+		ntity <|-- fire
+		ntity <|-- bomb
+	}
+
+
+	class ame {
+		-state
+		-time
+		-entity_v[]
+		-zawarudo
+		+get_entity(id)
+		+frame(dt)
+	}
+
+	ame --> "1" za.warudo
+	ame *-- "*" g.e.ntity
+}
+
+namespace w {
+	class indow {
+		+renderer
+		+mixer
+		+game
+		+time
+		-load_assets()
+		+frame(dt)
+		+draw()
+		-draw_dialog()
+		-draw_hud()
+		-draw_g_entities()
+		-draw_g_entity(id)
+	}
+
+	indow --> "1" r.enderer
+	indow --> "1" m.ixer
+	indow --> "1" g.ame
+}
+
+namespace r {
+	namespace ss {
+		class heet {
+			+sdl_texture
+			+sw
+			+sh
+			+m
+			+n
+			+draw(i, j)
+			+draw(i)
+			+load(path)
+			+free()
+		}
+
+		class frame {
+			+t
+			+i
+			+j
+		}
+
+		class anim {
+			+ssheet_id
+			+frame_v[]
+			+frame_c
+			+fps
+			+get_ssheet()
+			+draw(t)
+			+load(path)
+			+free()
+		}
+
+		anim *-- "*" frame
+		anim "*" -> "1" heet
+	}
+
+	class enderer {
+		#sdl_window
+		#sdl_renderer
+		-ssheet_v[]
+		-ssanim_v[]
+		-modelview_matrix_q[]
+		#modelview_matrix_q_head
+		-modelview_matrix_q_tail
+		#projection_matrix
+		+matrix(m)
+		+mult_matrix(m)
+		+translate(x, y)
+		+rotate(a)
+		+scale(sx, sy)
+		+push_matrix()
+		+pop_matrix()
+		+ssheet(id)
+		+ssanim(id)
+		+free()
+	}
+
+	note right: matrices must be \n orthogonal because of \n SDL_DrawCopyEx()
+
+	enderer *-- "*" r.ss.heet
+	enderer *-- "*" r.ss.anim
+}
+
+namespace m {
+	note "TODO" as TODONOTE
+
+	class ixer {
+		#music_v[]
+		#chunk_v[]
+		+music(id)
+		+chunk(id)
+	}
+}
+
+@enduml
