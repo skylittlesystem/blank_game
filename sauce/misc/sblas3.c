@@ -23,7 +23,7 @@
 
 #include "sblas3.h"
 
-vec dot3(vec* restrict x, vec* restrict y)
+vec dot3(const vec* restrict x, const vec* restrict y)
 {
 	register unsigned i;
 	register vec dot = 0;
@@ -34,7 +34,7 @@ vec dot3(vec* restrict x, vec* restrict y)
 	return dot;
 }
 
-void axpy3(vec alpha, vec* restrict x, vec* restrict y)
+void axpy3(vec alpha, const vec* restrict x, vec* restrict y)
 {
 	register unsigned i;
 
@@ -52,8 +52,8 @@ void scal3(vec alpha, vec* restrict x)
 
 void gemv3(
 		vec alpha,
-		vec* restrict A,
-		vec* restrict x,
+		const vec* restrict A,
+		const vec* restrict x,
 		vec beta,
 		vec* restrict y
 	    )
