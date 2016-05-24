@@ -26,21 +26,22 @@
 
 #include <stdbool.h>
 
-#define G_MAX_ENTITIES 16
+#define G_E_MAX 16
 
-enum g_type
+enum g_e_type
 {
-	G_NAUGHT = 0,
-	G_AILIN,
-	G_LEVEL_CLARICE,
-	G_BOMB,
-	G_FIRE,
-	G_PACSATAN,
+	G_E_NAUGHT = 0,
+	G_E_AILIN,
+	G_E_LEVEL_CLARICE,
+	G_E_BOMB,
+	G_E_FIRE,
+	G_E_PACSATAN,
+	G_E_TYPE_COUNT
 };
 
 struct g_entity
 {
-	enum g_type type;
+	enum g_e_type type;
 	float pos[3];
 	float vel[3];
 	/* FIXME: perhaps this is kinda retarded? need sleep */
@@ -51,14 +52,16 @@ struct g_ame
 {
 	unsigned state;
 	bool gameover;
-	struct g_entity entity_v[G_MAX_ENTITIES];
+	struct g_entity entity_v[G_E_MAX];
 };
 
-#define g_get_entity(G, id) (&(G)->entity_v[(id)])
-#define g_get_player_entity(G) g_get_entity((G), 0)
+#define G_E_PLAYER_ID 1
+#define G_E_LEVEL_ID  0
 
-void g_ame_frame(struct g_ame* G, unsigned long dt);
-void g_ame_fini(struct g_ame* G);
-void g_ame_init(struct g_ame* G);
+#define g_entity_get(G, id) (&(G)->entity_v[(id)])
+
+void g_frame(struct g_ame* G, unsigned long dt);
+void g_fini(struct g_ame* G);
+void g_init(struct g_ame* G);
 
 #endif

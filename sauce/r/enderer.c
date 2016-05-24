@@ -27,112 +27,161 @@
 
 #define WINDOW_SCALE 4
 #define R_SDL_WINDOW_TITLE "!!!11!1!!1ONE!!"
-#define R_SDL_WINDOW_W (WINDOW_SCALE * R_WINDOW_W)
-#define R_SDL_WINDOW_H (WINDOW_SCALE * R_WINDOW_H)
+#define R_SDL_WINDOW_W (WINDOW_SCALE * R_WIDTH)
+#define R_SDL_WINDOW_H (WINDOW_SCALE * R_HEIGHT)
 
-void r_op_exe(struct r_op* op)
+void r_identity(struct r_enderer* R)
 {
-	assert (op->sdl_renderer);
-	assert (op->sdl_texture);
-
-	SDL_RenderCopy(
-			op->sdl_renderer,
-			op->sdl_texture,
-			&op->sdl_srcrect,
-			&op->sdl_dstrect
-			);
+	R->sdl_dstrect_translate[0] = 0;
+	R->sdl_dstrect_translate[1] = 0;
 }
 
-void r_ssheet_2_op(
+void r_translate(struct r_enderer* R, int x, int y)
+{
+	R->sdl_dstrect_translate[0] += x;
+	R->sdl_dstrect_translate[1] += y;
+}
+
+void r_ssheet_draw(
 		struct r_enderer* R,
-		unsigned ssheet_id,
+		unsigned id,
 		unsigned i,
 		unsigned j,
-		struct r_op* op
+		bool center
 		)
 {
-	struct r_ssheet* ssheet;
+	struct r_ss_heet* ssheet = r_ssheet_get(R, id);
 
-	op->sdl_renderer = R->sdl_renderer;
-
-	ssheet = r_get_ssheet(R, ssheet_id);
-
-	i %= ssheet->m;
-	j %= ssheet->n;
-
-	op->sdl_texture = ssheet->sdl_texture;
-	op->sdl_srcrect = (struct SDL_Rect)
+	SDL_Rect srcrect =
 	{
 		ssheet->sw * j,
 		ssheet->sh * i,
 		ssheet->sw,
 		ssheet->sh
 	};
+
+	SDL_Rect dstrect =
+	{
+		R->sdl_dstrect_translate[0] - (center ? ssheet->sw/2 : 0),
+		R->sdl_dstrect_translate[1] - (center ? ssheet->sh/2 : 0),
+		ssheet->sw,
+		ssheet->sh
+	};
+
+	SDL_RenderCopy(
+			R->sdl_renderer,
+			ssheet->sdl_texture,
+			&srcrect,
+			&dstrect
+			);
 }
 
-void r_ssheet_anim_2_op(
+void r_ssanim_draw(
 		struct r_enderer* R,
-		unsigned ssheet_id,
+		unsigned id,
 		unsigned long t,
-		struct r_op* op
+		bool center
 		)
 {
-	struct r_ssheet* ssheet;
-	unsigned i, j;
+	struct r_ss_anim* ssanim = r_ssanim_get(R, id);
+	unsigned (*f)[2];
 
-	ssheet = r_get_ssheet(R, ssheet_id);
-	i = (t * R_SSHEET_ANIM_FPS) / 1000;
-	j = i % ssheet->n;
-	i /= ssheet->n;
-
-	r_ssheet_2_op(R, ssheet_id, i, j, op);
+	f = ssanim->frame_v + (((R_SS_ANIM_FPS * t) / 1000) % ssanim->frame_c);
+	r_ssheet_draw(R, ssanim->ssheet_id, (*f)[0], (*f)[1], center);
 }
 
 void r_ssheet_load(
 		struct r_enderer* R,
-		unsigned ssheet_id,
-		char* path,
-		unsigned sw,
-		unsigned sh
+		unsigned id,
+		char* path
 		)
 {
+	struct r_ss_heet* s;
+
+	FILE* fp;
+	char img_path[256];
+	char txt_path[256];
+
 	SDL_Surface* surf;
 	SDL_Texture* tex;
-	struct r_ssheet* ssheet;
 
-	surf = IMG_Load(path);
+	s = r_ssheet_get(R, id);
+
+	assert (snprintf(img_path, sizeof (img_path), "%s/texture.png", path)
+			< sizeof (img_path));
+
+	assert (!snprintf(txt_path, sizeof (txt_path), "%s/data.txt", path)
+			< sizeof (txt_path));
+
+	surf = IMG_Load(img_path);
 	assert (surf); /* TODO: handling */
 	tex = SDL_CreateTextureFromSurface(R->sdl_renderer, surf);
 	assert (tex); /* TODO: handling */
 	SDL_FreeSurface(surf);
+	s->sdl_texture = tex;
 
-	ssheet = r_get_ssheet(R, ssheet_id);
-	ssheet->sdl_texture = tex;
-	ssheet->sw = sw;
-	ssheet->sh = sh;
-	ssheet->m = surf->h / sh;
-	ssheet->n = surf->w / sw;
+	fp = fopen(txt_path, "r");
+	assert (fp); /* TODO: handling */
+
+	fscanf(fp, "%u %u", &s->sw, &s->sh);
+	s->m = surf->h / s->sh;
+	s->n = surf->w / s->sw;
+
+	fclose(fp);
 }
 
-void r_enderer_clear(struct r_enderer* R)
+void r_ssanim_load(
+		struct r_enderer* R,
+		unsigned id,
+		char* path,
+		unsigned ssheet_id
+		)
+{
+	struct r_ss_anim* a;
+
+	FILE* fp;
+	char a_path[256];
+
+	unsigned i;
+
+	a = r_ssanim_get(R, id);
+
+	assert (snprintf(a_path, sizeof (a_path), "%s/data.txt", path)
+			< sizeof (a_path));
+
+	fp = fopen(a_path, "r");
+	assert (fp); /* TODO: handling */
+
+	a->ssheet_id = ssheet_id;
+
+	fscanf(fp, "%u", &a->frame_c);
+	a->frame_v = malloc(sizeof (*a->frame_v) * a->frame_c);
+
+	for (i = 0; i < a->frame_c; ++i)
+		fscanf(fp, "%u %u", &a->frame_v[i][0], &a->frame_v[i][1]);
+
+	fclose(fp);
+}
+
+void r_clear(struct r_enderer* R)
 {
 	SDL_SetRenderDrawColor(R->sdl_renderer, 168, 230, 255, 255);
 	SDL_RenderClear(R->sdl_renderer);
 }
 
-void r_enderer_present(struct r_enderer* R)
+void r_present(struct r_enderer* R)
 {
 	SDL_RenderPresent(R->sdl_renderer);
 }
 
-void r_enderer_fini(struct r_enderer* R)
+void r_fini(struct r_enderer* R)
 {
 	SDL_DestroyRenderer(R->sdl_renderer);
 	SDL_DestroyWindow(R->sdl_window);
 	SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
 
-void r_enderer_init(struct r_enderer* R)
+void r_init(struct r_enderer* R)
 {
 	assert(SDL_InitSubSystem(SDL_INIT_VIDEO) == 0);
 
@@ -151,12 +200,6 @@ void r_enderer_init(struct r_enderer* R)
 
 	assert (R->sdl_renderer); /* FIXME: handle */
 
-	/* TODO: decent resource handling */
-	r_ssheet_load(R, R_SS_AILIN, "data/ailin_ssheet.png", 64, 64);
-	r_ssheet_load(R, R_SS_LEVEL_CLARICE, "data/level_clarice_ssheet.png", 256, 64);
-	r_ssheet_load(R, R_SS_BOMB, "data/bomb_ssheet.png", 64, 64);
-	r_ssheet_load(R, R_SS_FIRE, "data/fire_ssheet.png", 64, 64);
-	r_ssheet_load(R, R_SS_PACSATAN, "data/pacsatan_ssheet.png", 64, 64);
-
-	SDL_RenderSetScale(R->sdl_renderer, WINDOW_SCALE, WINDOW_SCALE);
+	//SDL_RenderSetScale(R->sdl_renderer, WINDOW_SCALE, WINDOW_SCALE);
+	SDL_RenderSetLogicalSize(R->sdl_renderer, R_WIDTH, R_HEIGHT);
 }

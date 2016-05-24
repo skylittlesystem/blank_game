@@ -24,76 +24,75 @@
 #ifndef HAS_R_ENDERER_H
 #define HAS_R_ENDERER_H
 
-#define R_WINDOW_W 320
-#define R_WINDOW_H 240
+#define R_WIDTH  320
+#define R_HEIGHT 240
 
 #include <SDL.h>
+#include <stdbool.h>
 
-struct r_ssheet
+struct r_ss_heet
 {
 	SDL_Texture* sdl_texture;
 	unsigned sw, sh;		/* sprite w, h */
 	unsigned m, n;			/* rows, cols */
 };
 
-#define R_SSHEET_ANIM_FPS 24
+#define R_SS_ANIM_FPS 10
+
+struct r_ss_anim
+{
+	unsigned ssheet_id;
+	unsigned (*frame_v)[2];
+	unsigned frame_c;
+};
 
 struct r_enderer
 {
 	SDL_Window* sdl_window;
 	SDL_Renderer* sdl_renderer;
-	struct r_ssheet ssheet_v[16];
+	int sdl_dstrect_translate[2];
+	struct r_ss_heet ssheet_v[16];
+	struct r_ss_anim ssanim_v[128];
 };
 
-struct r_op
-{
-	SDL_Renderer* sdl_renderer;
-	SDL_Texture* sdl_texture;
-	SDL_Rect sdl_srcrect;
-	SDL_Rect sdl_dstrect;
-};
+void r_identity(struct r_enderer* R);
+void r_translate(struct r_enderer* R, int x, int y);
 
-enum
-{
-	R_SS_NAUGHT = 0,
-	R_SS_AILIN,
-	R_SS_LEVEL_CLARICE,
-	R_SS_BOMB,
-	R_SS_FIRE,
-	R_SS_PACSATAN,
-};
+#define r_ssheet_get(R, id) (&(R)->ssheet_v[(id)])
+#define r_ssanim_get(R, id) (&(R)->ssanim_v[(id)])
 
-#define r_get_ssheet(R, id) (&(R)->ssheet_v[(id)])
-
-void r_op_exe(struct r_op* op);
-
-void r_ssheet_2_op(
+void r_ssheet_draw(
 		struct r_enderer* R,
-		unsigned ssheet_id,
+		unsigned id,
 		unsigned i,
 		unsigned j,
-		struct r_op* op
+		bool center
 		);
 
-void r_ssheet_anim_2_op(
+void r_ssanim_draw(
 		struct r_enderer* R,
-		unsigned ssheet_id,
+		unsigned id,
 		unsigned long t,
-		struct r_op* op
+		bool center
 		);
 
 void r_ssheet_load(
 		struct r_enderer* R,
-		unsigned ssheet_id,
-		char* path,
-		unsigned sw,
-		unsigned sh
+		unsigned id,
+		char* path
 		);
 
-void r_enderer_clear(struct r_enderer* R);
-void r_enderer_present(struct r_enderer* R);
+void r_ssanim_load(
+		struct r_enderer* R,
+		unsigned id,
+		char* path,
+		unsigned ssheet_id
+		);
 
-void r_enderer_fini(struct r_enderer* R);
-void r_enderer_init(struct r_enderer* R);
+void r_clear(struct r_enderer* R);
+void r_present(struct r_enderer* R);
+
+void r_fini(struct r_enderer* R);
+void r_init(struct r_enderer* R);
 
 #endif

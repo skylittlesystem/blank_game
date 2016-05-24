@@ -26,10 +26,10 @@
 #include <SDL.h>
 
 #include "g/ame.h"
-#include "ui/interface.h"
+#include "w/indow.h"
 
-static struct g_ame teh_game;
-static struct ui_interface teh_interface;
+static struct g_ame teh_G;
+static struct w_indow teh_W;
 
 /*
  * Teh main function!!11!1ONE
@@ -39,22 +39,22 @@ int main(int argc, char *argv[])
 {
 	unsigned long t1, t2, dt;
 
-	g_ame_init(&teh_game);
-	ui_interface_init(&teh_interface, &teh_game);
+	g_init(&teh_G);
+	w_init(&teh_W, &teh_G);
 
 	t1 = SDL_GetTicks();
 	do {
 		t2 = SDL_GetTicks();
 		dt = t2 - t1;
 
-		g_ame_frame(&teh_game, dt);
-		ui_interface_frame(&teh_interface, dt);
+		g_frame(&teh_G, dt);
+		w_frame(&teh_W, dt);
 
 		t1 = t2;
-	} while (!(teh_interface.should_quit || teh_game.gameover));
+	} while (!w_should_quit(&teh_W));
 
-	ui_interface_fini(&teh_interface);
-	g_ame_fini(&teh_game);
+	w_fini(&teh_W);
+	g_fini(&teh_G);
 
 	SDL_Quit();
 

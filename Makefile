@@ -24,10 +24,9 @@ LD := $(LD)
 
 OBJ := \
 	build/r/enderer.o \
-	build/r/game.o \
 	build/m/ixer.o \
-	build/ui/interface.o \
-	build/ui/window.o \
+	build/w/indow.o \
+	build/w/draw.o \
 	build/g/ame.o \
 	build/misc/sblas3.o \
 	build/blank_game.o \

@@ -21,23 +21,11 @@
  *
  */
 
-#ifndef UI_WINDOW_H
-#define UI_WINDOW_H
+#ifndef HAS_W_DRAW_H
+#define HAS_W_DRAW_H
 
-#include <SDL.h>
-#include "r/enderer.h"
-#include "g/ame.h"
+#include "indow.h"
 
-struct ui_window
-{
-	struct r_enderer R;
-	struct g_ame* G;
-	unsigned char keyv;
-};
-
-void ui_window_event(struct ui_window* win, SDL_Event* e);
-void ui_window_frame(struct ui_window* win, unsigned long dt);
-void ui_window_fini(struct ui_window* win);
-void ui_window_init(struct ui_window* win, struct g_ame* G);
+void w_draw(struct w_indow* W);
 
 #endif

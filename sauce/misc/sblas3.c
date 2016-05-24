@@ -51,6 +51,7 @@ void scal3(vec alpha, vec* restrict x)
 }
 
 void gemv3(
+		bool transA,
 		vec alpha,
 		const vec* restrict A,
 		const vec* restrict x,
@@ -60,10 +61,41 @@ void gemv3(
 {
 	register unsigned i, j;
 
+#define A_(i, j) A[3 * (j) + (i)]
+#define A(i, j) (transA ? A_(i, j) : A_(j, i))
+
 	for (i = 0; i < 3; ++i)
 	{
 		y[i] = beta * y[i];
 		for (j = 0; j < 3; ++j)
-			y[i] += alpha * A[i + 3 * j] * x[j];
+			y[i] += alpha * A(i, j) * x[j];
+	}
+}
+
+void gemm3(
+		bool transA,
+		bool transB,
+		vec alpha,
+		const vec* restrict A,
+		const vec* restrict B,
+		vec beta,
+		vec* restrict C
+	  )
+{
+	register unsigned i, j, k;
+
+#define B_(i, j) B[3 * (j) + (i)]
+#define B(i, j) (transB ? B_(i, j) : B_(j, i))
+#define C(i, j) C[3 * (j) + (i)]
+
+	for (i = 0; i < 3; ++i)
+	{
+		for (j = 0; j < 3; ++j)
+		{
+			C(i, j) *= beta;
+
+			for (k = 0; k < 3; ++k)
+				C(i, j) += A_(i, k) * B_(k, j);
+		}
 	}
 }

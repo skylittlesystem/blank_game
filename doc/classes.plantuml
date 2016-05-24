@@ -119,7 +119,6 @@ namespace r {
 			+ssheet_id
 			+frame_v[]
 			+frame_c
-			+fps
 			+get_ssheet()
 			+draw(t)
 			+load(path)
@@ -133,19 +132,11 @@ namespace r {
 	class enderer {
 		#sdl_window
 		#sdl_renderer
+		#sdl_dstrect_translate[2]
+		#projection_matrix
 		-ssheet_v[]
 		-ssanim_v[]
-		-modelview_matrix_v[]
-		#modelview_matrix_v_top
-		-modelview_matrix_v_bottom
-		#projection_matrix
-		+matrix(m)
-		+mult_matrix(m)
 		+translate(x, y)
-		+rotate(a)
-		+scale(sx, sy)
-		+push_matrix()
-		+pop_matrix()
 		+ssheet(id)
 		+ssanim(id)
 		+free()

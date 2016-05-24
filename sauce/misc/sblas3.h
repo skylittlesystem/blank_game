@@ -24,17 +24,30 @@
 #ifndef HAS_SBLAS3_H
 #define HAS_SBLAS3_H
 
+#include <stdbool.h>
+
 typedef float vec;
 
 vec dot3(const vec* restrict x, const vec* restrict y);
 void axpy3(vec alpha, const vec* restrict x, vec* restrict y);
 void scal3(vec alpha, vec* restrict x);
 void gemv3(
+		bool trans,
 		vec alpha,
 		const vec* restrict A,
 		const vec* restrict x,
 		vec beta,
 		vec* restrict y
 	    );
+
+void gemm3(
+		bool transA,
+		bool transB,
+		vec alpha,
+		const vec* restrict A,
+		const vec* restrict B,
+		vec beta,
+		vec* restrict C
+	  );
 
 #endif

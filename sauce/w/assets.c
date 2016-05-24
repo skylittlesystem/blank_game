@@ -21,46 +21,26 @@
  *
  */
 
-#include "interface.h"
-
-void ui_interface_poll_event(struct ui_interface* ui)
+static void load_assets(struct w_indow* W)
 {
-	SDL_Event e;
-
-	while (SDL_PollEvent(&e))
-	{
-		switch (e.type)
-		{
-		case SDL_KEYDOWN:
-		case SDL_KEYUP:
-			ui_window_event(&ui->win, &e);
-			break;
-
-		case SDL_QUIT:
-			ui->should_quit = true;
-			return;
-
-		default:
-			continue;
-		}
-	}
-}
-
-void ui_interface_frame(struct ui_interface* ui, unsigned long dt)
-{
-	ui_interface_poll_event(ui);
-	ui_window_frame(&ui->win, dt);
-}
-
-void ui_interface_fini(struct ui_interface* ui)
-{
-	m_ixer_init(&ui->mixer);
-	ui_window_fini(&ui->win);
-}
-
-void ui_interface_init(struct ui_interface* ui, struct g_ame* G)
-{
-	ui_window_init(&ui->win, G);
-	ui->should_quit = false;
-	m_ixer_init(&ui->mixer);
+	/* ssheets */
+#define _(x) r_ssheet_load( \
+		&W->R, \
+		W_SSHEET_ ## x, \
+		"data/ssheet/" #x \
+		)
+	_(AILIN);
+	_(PACSATAN);
+	_(LEVEL_CLARICE);
+#undef _
+	/* ssanims */
+#define _(x, y) r_ssanim_load( \
+		&W->R, \
+		W_SSANIM_ ## x ## _ ## y, \
+		"data/ssanim/" #x "/" #y, \
+		W_SSHEET_ ## x \
+		)
+	_(AILIN, MONGOL);
+	_(PACSATAN, NHAC);
+#undef _
 }

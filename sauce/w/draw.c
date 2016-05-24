@@ -21,84 +21,57 @@
  *
  */
 
-#include "game.h"
-#include "misc/sblas3.h"
+#include "draw.h"
 
-#define X (((float) R_WINDOW_W) / 2)
-#define Y (((float) R_WINDOW_H) / 2)
-#define S (((float) R_WINDOW_W) / 5) 
+#define PPWU 64
 
-float projection_matrix[] =
+static void draw_g_entity(struct w_indow* W, unsigned id)
 {
-	 S,  0,  0,
-	 0, -S,  0,
-	 X,  Y,  1,
-};
-
-#undef S
-#undef Y
-#undef X
-
-void r_g_entity_draw(struct r_enderer* R, struct g_ame* G, unsigned id)
-{
-	struct r_op op;
 	struct g_entity* e;
-	struct r_ssheet* ssheet;
-	unsigned ssheet_id;
+	int p[2];
 
-	e = g_get_entity(G, id);
+	e = g_entity_get(W->G, id);
+
+	p[0] = R_WIDTH  / 2 + e->pos[0];
+	p[1] = R_HEIGHT / 2 - e->pos[1];
+
+	r_identity(&W->R);
+	r_translate(&W->R, p[0], p[1]);
+
+#define S(x, i, j) r_ssheet_draw(&W->R, W_SSHEET_ ## x, (i), (j), true)
+
+#define A(x, y, t) r_ssanim_draw(&W->R, W_SSANIM_ ## x ## _ ## y, (t), true)
 
 	switch (e->type)
 	{
-	case G_AILIN:
-		ssheet_id = R_SS_AILIN;
+	case G_E_AILIN:
+		A(AILIN, MONGOL, e->t);
 		break;
 
-	case G_LEVEL_CLARICE:
-		ssheet_id = R_SS_LEVEL_CLARICE;
+	case G_E_LEVEL_CLARICE:
+		S(LEVEL_CLARICE, 0, 0);
 		break;
 
-	case G_BOMB:
-		ssheet_id = R_SS_BOMB;
-		break;
-
-	case G_FIRE:
-		ssheet_id = R_SS_FIRE;
-		break;
-
-	case G_PACSATAN:
-		ssheet_id = R_SS_PACSATAN;
+	case G_E_PACSATAN:
+		A(PACSATAN, NHAC, e->t);
 		break;
 
 	default:
-		return;
+		break;
 	}
 
-	ssheet = r_get_ssheet(R, ssheet_id);
-
-	float pos[3];
-
-	gemv3(1, projection_matrix, e->pos, 0, pos);
-
-	r_ssheet_anim_2_op(R, ssheet_id, e->t, &op);
-	op.sdl_dstrect = (SDL_Rect)
-	{
-		((int) pos[0]) - ssheet->sw/2,
-		((int) pos[1]) - ssheet->sh/2,
-		ssheet->sw,
-		ssheet->sh,
-	};
-
-	r_op_exe(&op);
+	r_translate(&W->R, -p[0], -p[1]);
 }
 
-void r_g_ame_draw(
-		struct r_enderer* R,
-		struct g_ame* G
-		)
+static void draw_g_entities(struct w_indow* W)
 {
 	unsigned i;
 
-	for (i = 0; i < G_MAX_ENTITIES; ++i)
-		r_g_entity_draw(R, G, i);
+	for (i = 0; i < G_E_MAX; ++i)
+		draw_g_entity(W, i);
+}
+
+void w_draw(struct w_indow* W)
+{
+	draw_g_entities(W);
 }

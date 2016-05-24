@@ -21,23 +21,38 @@
  *
  */
 
-#ifndef HAVE_UI_INTERFACE_H
-#define HAVE_UI_INTERFACE_H
+#ifndef W_INDOW_H
+#define W_INDOW_H
 
 #include <stdbool.h>
-#include "window.h"
+#include "r/enderer.h"
 #include "m/ixer.h"
+#include "g/ame.h"
 
-struct ui_interface
+struct w_indow
 {
-	struct ui_window win;
-	struct m_ixer mixer;
-	bool should_quit;
+	struct r_enderer R;
+	struct m_ixer M;
+	struct g_ame* G;
 };
 
-void ui_interface_poll_event(struct ui_interface* ui);
-void ui_interface_frame(struct ui_interface* ui, unsigned long dt);
-void ui_interface_fini(struct ui_interface* ui);
-void ui_interface_init(struct ui_interface* ui, struct g_ame* G);
+enum
+{
+	W_SSHEET_AILIN,
+	W_SSHEET_PACSATAN,
+	W_SSHEET_LEVEL_CLARICE,
+};
+
+enum
+{
+	W_SSANIM_AILIN_MONGOL,
+	W_SSANIM_PACSATAN_NHAC,
+};
+
+#define w_should_quit(W) ((W)->G->gameover)
+
+void w_frame(struct w_indow* W, unsigned long dt);
+void w_fini(struct w_indow* W);
+void w_init(struct w_indow* W, struct g_ame* G);
 
 #endif
