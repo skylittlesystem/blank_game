@@ -5,7 +5,9 @@
 CC := gcc
 CFLAGS := \
 	-Isauce \
-	`sdl2-config --cflags` \
+	`pkg-config sdl2 --cflags` \
+	`pkg-config SDL2_image --cflags` \
+	`pkg-config SDL2_mixer --cflags` \
 	-std=c99 \
 	-Wall \
 	-pipe \
@@ -15,9 +17,9 @@ CFLAGS := \
 LD := gcc
 LDFLAGS := \
 	-lm \
-	`sdl2-config --libs` \
-	-lSDL2_image \
-	-lSDL2_mixer \
+	`pkg-config sdl2 --libs` \
+	`pkg-config SDL2_image --libs` \
+	`pkg-config SDL2_mixer --libs` \
 	$(LDFLAGS)
 
 LD := $(LD)
