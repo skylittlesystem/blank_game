@@ -59,6 +59,7 @@ struct g_ame
 #define G_E_LEVEL_ID  0
 
 #define g_entity_get(G, id) (&(G)->entity_v[(id)])
+#define g_entity_clear(G) memset((G)->entity_v, 0, sizeof ((G)->entity_v));
 
 void g_frame(struct g_ame* G, unsigned long dt);
 void g_fini(struct g_ame* G);
