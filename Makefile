@@ -35,6 +35,7 @@ OBJ := \
 
 PRG := \
 	build/blank_game \
+	build/z/awarudo_test \
 
 .PHONY: all clean
 
@@ -47,6 +48,8 @@ build/%.o: sauce/%.c
 	mkdir -p `dirname $@`
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-$(PRG): $(OBJ)
+build/z/awarudo_test: build/z/awarudo_test.o build/z/awarudo.o
+build/blank_game: $(OBJ)
+$(PRG):
 	mkdir -p `dirname $@`
 	$(LD) $(LDFLAGS) -o $@ $^
