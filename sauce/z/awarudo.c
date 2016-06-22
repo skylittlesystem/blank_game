@@ -57,14 +57,14 @@ void z_j_pixxy_load(struct z_awarudo* Z, unsigned id, const char* path)
 	fp = fopen(txt_path, "r");
 	assert (fp); /* TODO: handling */
 
-	jp->bits = malloc(sizeof (unsigned char[surf->w][surf->h]));
+	jp->bits = malloc(surf->w * surf->h);
 	assert(jp->bits);
 
 	jp->type = Z_J_PIXXY;
 	fscanf(fp, "%i %i %u %u", &jp->p[0], &jp->p[1], &jp->l[0], &jp->l[1]);
 
 	for (i = 0; i < (surf->w * surf->h); ++i)
-		jp->bits[i] = ((char*) surf->pixels)[i] != 0;
+		jp->bits[i] = ((unsigned char*) surf->pixels)[i] > 128;
 
 	SDL_FreeSurface(surf);
 	fclose(fp);

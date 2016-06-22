@@ -70,14 +70,14 @@ void r_ssheet_draw(
 		unsigned id,
 		unsigned i,
 		unsigned j,
-		bool center
+		unsigned char pos
 		);
 
 void r_ssanim_draw(
 		struct r_enderer* R,
 		unsigned id,
 		unsigned long t,
-		bool center
+		unsigned char pos
 		);
 
 void r_ssheet_load(

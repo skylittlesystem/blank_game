@@ -61,7 +61,7 @@ void r_ssheet_draw(
 		unsigned id,
 		unsigned i,
 		unsigned j,
-		bool center
+		unsigned char pos
 		)
 {
 	struct r_ss_heet* ssheet = r_ssheet_get(R, id);
@@ -76,11 +76,23 @@ void r_ssheet_draw(
 
 	SDL_Rect dstrect =
 	{
-		R->p[0] - (center ? ssheet->sw/2 : 0),
-		R->p[1] - (center ? ssheet->sh/2 : 0),
+		R->p[0] ,
+		R->p[1],
 		ssheet->sw,
 		ssheet->sh
 	};
+
+	if (pos == 1)
+	{
+		dstrect.x -= ssheet->sw/2;
+		dstrect.y -= ssheet->sh/2;
+	}
+
+	else if (pos == 2)
+	{
+		dstrect.x -= ssheet->sw;
+		dstrect.y -= ssheet->sh;
+	}
 
 	SDL_RenderCopy(
 			R->sdl_renderer,
@@ -94,14 +106,14 @@ void r_ssanim_draw(
 		struct r_enderer* R,
 		unsigned id,
 		unsigned long t,
-		bool center
+		unsigned char pos
 		)
 {
 	struct r_ss_anim* ssanim = r_ssanim_get(R, id);
 	unsigned (*f)[2];
 
 	f = ssanim->frame_v + (((R_SS_ANIM_FPS * t) / 1000) % ssanim->frame_c);
-	r_ssheet_draw(R, ssanim->ssheet_id, (*f)[0], (*f)[1], center);
+	r_ssheet_draw(R, ssanim->ssheet_id, (*f)[0], (*f)[1], pos);
 }
 
 /* FIXME: resource manager */

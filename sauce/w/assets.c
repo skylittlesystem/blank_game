@@ -33,6 +33,8 @@ static void load_assets(struct w_indow* W)
 	_(PACSATAN);
 	_(LEVEL_CLARICE);
 	_(LEVEL_LABYRINTH);
+	_(LEVEL_ROOM);
+	_(CHARA);
 #undef _
 	/* ssanims */
 #define _(x, y) r_ssanim_load( \
@@ -43,5 +45,6 @@ static void load_assets(struct w_indow* W)
 		)
 	_(AILIN, MONGOL);
 	_(PACSATAN, NHAC);
+	_(CHARA, DEFAULT);
 #undef _
 }

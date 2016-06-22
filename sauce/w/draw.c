@@ -31,6 +31,8 @@ static void draw_g_entity(struct w_indow* W, unsigned id)
 	/* FIXME: */
 	unsigned char color[4] = {255, 0, 0, 128};
 
+	int p[2];
+
 	e = g_entity_get(W->G, id);
 	j = z_jojo_get(&W->G->Z, id);
 
@@ -41,7 +43,7 @@ static void draw_g_entity(struct w_indow* W, unsigned id)
 	{
 	case Z_J_BOXXY:
 		r_moveto(&W->R, j->boxxy.p);
-		r_rect_fill(&W->R, j->boxxy.l, color);
+		//r_rect_fill(&W->R, j->boxxy.l, color);
 		break;
 
 	case Z_J_PIXXY:
@@ -52,8 +54,8 @@ static void draw_g_entity(struct w_indow* W, unsigned id)
 		assert(false);
 	}
 
-#define S(x, i, j) r_ssheet_draw(&W->R, W_SSHEET_ ## x, (i), (j), false)
-#define A(x, y, t) r_ssanim_draw(&W->R, W_SSANIM_ ## x ## _ ## y, (t), false)
+#define S(x, i, j) r_ssheet_draw(&W->R, W_SSHEET_ ## x, (i), (j), 0)
+#define A(x, y, t) r_ssanim_draw(&W->R, W_SSANIM_ ## x ## _ ## y, (t), 2)
 
 	switch (e->type)
 	{
@@ -71,6 +73,17 @@ static void draw_g_entity(struct w_indow* W, unsigned id)
 
 	case G_E_LEVEL_LABYRINTH:
 		S(LEVEL_LABYRINTH, 0, 0);
+		break;
+
+	case G_E_LEVEL_ROOM:
+		S(LEVEL_ROOM, 0, 0);
+		break;
+
+	case G_E_CHARA:
+		p[0] = j->boxxy.p[0] + j->boxxy.l[0];
+		p[1] = j->boxxy.p[1] + j->boxxy.l[1];
+		r_moveto(&W->R, p);
+		A(CHARA, DEFAULT, e->t);
 		break;
 
 	default:

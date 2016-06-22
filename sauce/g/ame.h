@@ -38,6 +38,8 @@ enum g_e_type
 	G_E_FIRE,
 	G_E_PACSATAN,
 	G_E_LEVEL_LABYRINTH,
+	G_E_LEVEL_ROOM,
+	G_E_CHARA,
 	G_E_TYPE_COUNT
 };
 

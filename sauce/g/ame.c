@@ -72,17 +72,17 @@ void g_init(struct g_ame* G)
 
 	e = g_entity_get(G, G_E_PLAYER_ID);
 	j = z_jojo_get(&G->Z, G_E_PLAYER_ID);
-	e->type = G_E_AILIN;
+	e->type = G_E_CHARA;
 	j->type = Z_J_BOXXY;
 
-	j->boxxy.p[0] = 15;
-	j->boxxy.p[1] = 12;
-	j->boxxy.l[0] = 64;
-	j->boxxy.l[1] = 64;
+	j->boxxy.p[0] = 70 + 73;
+	j->boxxy.p[1] = 98 + 47;
+	j->boxxy.l[0] = 13;
+	j->boxxy.l[1] = 13;
 	j->boxxy.v[0] = 0;
 	j->boxxy.v[1] = 0;
 
 	e = g_entity_get(G, G_E_LEVEL_ID);
-	e->type = G_E_LEVEL_LABYRINTH;
-	z_j_pixxy_load(&G->Z, G_E_LEVEL_ID, "data/pixxy/LEVEL_LABYRINTH");
+	e->type = G_E_LEVEL_ROOM;
+	z_j_pixxy_load(&G->Z, G_E_LEVEL_ID, "data/pixxy/LEVEL_ROOM");
 }
