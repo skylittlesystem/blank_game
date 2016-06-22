@@ -30,16 +30,30 @@
 #define R_SDL_WINDOW_W (WINDOW_SCALE * R_WIDTH)
 #define R_SDL_WINDOW_H (WINDOW_SCALE * R_HEIGHT)
 
-void r_identity(struct r_enderer* R)
+void r_moveto(struct r_enderer* R, int* p)
 {
-	R->sdl_dstrect_translate[0] = 0;
-	R->sdl_dstrect_translate[1] = 0;
+	R->p[0] = p[0];
+	R->p[1] = p[1];
 }
 
-void r_translate(struct r_enderer* R, int x, int y)
+/* FIXME: */
+void r_rect_fill(
+		struct r_enderer* R,
+		unsigned* l,
+		unsigned char* c
+		)
 {
-	R->sdl_dstrect_translate[0] += x;
-	R->sdl_dstrect_translate[1] += y;
+	SDL_Rect rect =
+	{
+		R->p[0],
+		R->p[1],
+		l[0],
+		l[1]
+	};
+
+	SDL_SetRenderDrawBlendMode(R->sdl_renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawColor(R->sdl_renderer, c[0], c[1], c[2], c[3]);
+	SDL_RenderFillRect(R->sdl_renderer, &rect);
 }
 
 void r_ssheet_draw(
@@ -62,8 +76,8 @@ void r_ssheet_draw(
 
 	SDL_Rect dstrect =
 	{
-		R->sdl_dstrect_translate[0] - (center ? ssheet->sw/2 : 0),
-		R->sdl_dstrect_translate[1] - (center ? ssheet->sh/2 : 0),
+		R->p[0] - (center ? ssheet->sw/2 : 0),
+		R->p[1] - (center ? ssheet->sh/2 : 0),
 		ssheet->sw,
 		ssheet->sh
 	};
@@ -90,6 +104,8 @@ void r_ssanim_draw(
 	r_ssheet_draw(R, ssanim->ssheet_id, (*f)[0], (*f)[1], center);
 }
 
+/* FIXME: resource manager */
+/* FIXME: this is leaking! no free! */
 void r_ssheet_load(
 		struct r_enderer* R,
 		unsigned id,
@@ -130,6 +146,8 @@ void r_ssheet_load(
 	fclose(fp);
 }
 
+/* FIXME: resource manager */
+/* FIXME: this is leaking! no free! */
 void r_ssanim_load(
 		struct r_enderer* R,
 		unsigned id,
@@ -183,6 +201,8 @@ void r_fini(struct r_enderer* R)
 
 void r_init(struct r_enderer* R)
 {
+	memset(R, 0, sizeof (*R));
+
 	assert(SDL_InitSubSystem(SDL_INIT_VIDEO) == 0);
 
 	R->sdl_window = SDL_CreateWindow(

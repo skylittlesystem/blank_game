@@ -21,26 +21,39 @@
  *
  */
 
+#include <assert.h>
 #include "draw.h"
-
-#define PPWU 64
 
 static void draw_g_entity(struct w_indow* W, unsigned id)
 {
 	struct g_entity* e;
-	int p[2];
+	union z_jojo* j;
+	/* FIXME: */
+	unsigned char color[4] = {255, 0, 0, 128};
 
 	e = g_entity_get(W->G, id);
+	j = z_jojo_get(&W->G->Z, id);
 
-	p[0] = R_WIDTH  / 2 + e->pos[0];
-	p[1] = R_HEIGHT / 2 - e->pos[1];
+	if (e->type == G_E_NAUGHT || j->type == Z_J_NAUGHT)
+		return;
 
-	r_identity(&W->R);
-	r_translate(&W->R, p[0], p[1]);
+	switch (j->type)
+	{
+	case Z_J_BOXXY:
+		r_moveto(&W->R, j->boxxy.p);
+		r_rect_fill(&W->R, j->boxxy.l, color);
+		break;
 
-#define S(x, i, j) r_ssheet_draw(&W->R, W_SSHEET_ ## x, (i), (j), true)
+	case Z_J_PIXXY:
+		r_moveto(&W->R, j->pixxy.p);
+		break;
 
-#define A(x, y, t) r_ssanim_draw(&W->R, W_SSANIM_ ## x ## _ ## y, (t), true)
+	default:
+		assert(false);
+	}
+
+#define S(x, i, j) r_ssheet_draw(&W->R, W_SSHEET_ ## x, (i), (j), false)
+#define A(x, y, t) r_ssanim_draw(&W->R, W_SSANIM_ ## x ## _ ## y, (t), false)
 
 	switch (e->type)
 	{
@@ -56,11 +69,16 @@ static void draw_g_entity(struct w_indow* W, unsigned id)
 		A(PACSATAN, NHAC, e->t);
 		break;
 
-	default:
+	case G_E_LEVEL_LABYRINTH:
+		S(LEVEL_LABYRINTH, 0, 0);
 		break;
+
+	default:
+		assert (false);
 	}
 
-	r_translate(&W->R, -p[0], -p[1]);
+#undef A
+#undef S
 }
 
 static void draw_g_entities(struct w_indow* W)

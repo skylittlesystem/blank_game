@@ -25,6 +25,7 @@
 #define HAS_G_AME_H
 
 #include <stdbool.h>
+#include "z/awarudo.h"
 
 #define G_E_MAX 16
 
@@ -36,14 +37,13 @@ enum g_e_type
 	G_E_BOMB,
 	G_E_FIRE,
 	G_E_PACSATAN,
+	G_E_LEVEL_LABYRINTH,
 	G_E_TYPE_COUNT
 };
 
 struct g_entity
 {
 	enum g_e_type type;
-	float pos[3];
-	float vel[3];
 	/* FIXME: perhaps this is kinda retarded? need sleep */
 	unsigned long t;
 };
@@ -52,6 +52,7 @@ struct g_ame
 {
 	unsigned state;
 	bool gameover;
+	struct z_awarudo Z;
 	struct g_entity entity_v[G_E_MAX];
 };
 

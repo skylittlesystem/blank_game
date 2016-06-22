@@ -76,4 +76,5 @@ struct z_awarudo
 
 #define z_jojo_get(Z, id) (&(Z)->jojo_v[(id)])
 
+void z_j_pixxy_load(struct z_awarudo* Z, unsigned id, const char* path);
 void z_awarudo_frame(struct z_awarudo* Z, unsigned long dt);

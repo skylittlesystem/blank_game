@@ -30,6 +30,7 @@ OBJ := \
 	build/w/indow.o \
 	build/w/draw.o \
 	build/g/ame.o \
+	build/z/awarudo.o \
 	build/misc/sblas3.o \
 	build/blank_game.o \
 

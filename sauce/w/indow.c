@@ -66,19 +66,21 @@ static void handle_events(struct w_indow* W)
 static void handle_keyboard_state(struct w_indow* W)
 {
 	const Uint8* s;
-	struct g_entity* p1;
+	//struct g_entity* e;
+	struct z_j_boxxy* jb;
 
 	s = SDL_GetKeyboardState(NULL);
-	p1 = g_entity_get(W->G, G_E_PLAYER_ID);
+	//e = g_entity_get(W->G, G_E_PLAYER_ID);
+	jb = &z_jojo_get(&W->G->Z, G_E_PLAYER_ID)->boxxy;
+
+	memset(jb->v, 0, sizeof (jb->v));
 
 	/* FIXME: velocity should be capped by game */
-#define V (.5 * 64)
-	p1->vel[0] = 0;
-	p1->vel[1] = 0;
-	p1->vel[0] += (s[SDL_SCANCODE_RIGHT]) ?	 V : 0;
-	p1->vel[1] += (s[SDL_SCANCODE_UP]) ?	 V : 0;
-	p1->vel[0] += (s[SDL_SCANCODE_LEFT]) ?	-V : 0;
-	p1->vel[1] += (s[SDL_SCANCODE_DOWN]) ?	-V : 0;
+#define V 1
+	jb->v[0] += (s[SDL_SCANCODE_RIGHT]) ?	 V : 0;
+	jb->v[1] += (s[SDL_SCANCODE_UP]) ?	-V : 0;
+	jb->v[0] += (s[SDL_SCANCODE_LEFT]) ?	-V : 0;
+	jb->v[1] += (s[SDL_SCANCODE_DOWN]) ?	 V : 0;
 #undef V
 }
 

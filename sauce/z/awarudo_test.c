@@ -68,7 +68,6 @@ static void test(unsigned frames)
 	teh_hit = false;
 	teh_tiem = 0;
 
-	/* TODO: CONTINUE ASD */
 	for (i = 0; i < frames; ++i)
 	{
 		assert (!teh_hit);

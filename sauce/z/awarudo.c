@@ -24,8 +24,51 @@
 #include <assert.h>
 #include <string.h>
 #include <math.h>
+#include <stdio.h>
+#include <SDL.h>
+#include <SDL_image.h>
 
 #include "awarudo.h"
+
+/* FIXME: resource manager */
+/* FIXME: this is leaking! no free! */
+void z_j_pixxy_load(struct z_awarudo* Z, unsigned id, const char* path)
+{
+	unsigned i;
+	struct z_j_pixxy* jp;
+
+	FILE* fp;
+	char img_path[256];
+	char txt_path[256];
+
+	SDL_Surface* surf;
+
+	jp = &z_jojo_get(Z, id)->pixxy;
+
+	assert (snprintf(img_path, sizeof (img_path), "%s/bitmap.png", path)
+			< sizeof (img_path));
+
+	assert (!snprintf(txt_path, sizeof (txt_path), "%s/data.txt", path)
+			< sizeof (txt_path));
+
+	surf = IMG_Load(img_path);
+	assert (surf); /* TODO: handling */
+
+	fp = fopen(txt_path, "r");
+	assert (fp); /* TODO: handling */
+
+	jp->bits = malloc(sizeof (unsigned char[surf->w][surf->h]));
+	assert(jp->bits);
+
+	jp->type = Z_J_PIXXY;
+	fscanf(fp, "%i %i %u %u", &jp->p[0], &jp->p[1], &jp->l[0], &jp->l[1]);
+
+	for (i = 0; i < (surf->w * surf->h); ++i)
+		jp->bits[i] = ((char*) surf->pixels)[i] != 0;
+
+	SDL_FreeSurface(surf);
+	fclose(fp);
+}
 
 /* TODO: is this even necessary? */
 static bool trace_boxxy_vs_boxxy(

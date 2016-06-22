@@ -50,13 +50,17 @@ struct r_enderer
 {
 	SDL_Window* sdl_window;
 	SDL_Renderer* sdl_renderer;
-	int sdl_dstrect_translate[2];
+	int p[2];
 	struct r_ss_heet ssheet_v[16];
 	struct r_ss_anim ssanim_v[128];
 };
 
-void r_identity(struct r_enderer* R);
-void r_translate(struct r_enderer* R, int x, int y);
+void r_moveto(struct r_enderer* R, int* p);
+void r_rect_fill(
+		struct r_enderer* R,
+		unsigned* l,
+		unsigned char* c
+		);
 
 #define r_ssheet_get(R, id) (&(R)->ssheet_v[(id)])
 #define r_ssanim_get(R, id) (&(R)->ssanim_v[(id)])

@@ -32,6 +32,7 @@ static void load_assets(struct w_indow* W)
 	_(AILIN);
 	_(PACSATAN);
 	_(LEVEL_CLARICE);
+	_(LEVEL_LABYRINTH);
 #undef _
 	/* ssanims */
 #define _(x, y) r_ssanim_load( \
