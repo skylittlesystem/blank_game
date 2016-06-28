@@ -1,162 +1,104 @@
 @startuml
 
-namespace za {
-	interface jojo {
-		+on_wryyy(wryyy)
-	}
-
-	jojo ..> wryyy
-
-	abstract class muda {
-		+type
-	}
-
-	muda --> "1" jojo
-
-	class boxxy {
-		+is_solid
-		+boxxy
-		+vel
-	}
-
-	muda <|-- boxxy
-
-	class bsp {
-		...
-	}
-
-	muda <|-- bsp
-
-	class wryyy {
-		+sauce_id
-		+dest_id
-	}
-
-	wryyy --> "2" muda
-
-	class warudo {
-		-muda_v[]
-		+get_muda(id)
-		+frame(dt)
-	}
-
-	warudo *-- "*" muda
+abstract class rec {
+	+id
+	..
+	#refc
 }
 
-namespace g {
-	namespace e {
-		abstract class ntity {
-			+type
-			+get_muda()
-			#frame(dt)
-		}
-
-		za.jojo <|.. ntity
-		ntity --> "1" za.muda
-
-		ntity <|-- ailin
-		ntity <|-- level_clarice
-		ntity <|-- pacsatan
-		ntity <|-- fire
-		ntity <|-- bomb
-	}
-
-
-	class ame {
-		-state
-		-time
-		-entity_v[]
-		-zawarudo
-		+get_entity(id)
-		+frame(dt)
-	}
-
-	ame --> "1" za.warudo
-	ame *-- "*" g.e.ntity
+abstract class tape {
+	+v[]
+	__
+	+open(id)
+	+save(id)
+	+close(id)
+	+gc()
+	..
+	{abstract} +open_(rec, id)
+	{abstract} +save_(rec, id)
+	{abstract} +close_(rec, id)
 }
 
-namespace w {
-	class indow {
-		+renderer
-		+mixer
-		+game
-		+time
-		-load_assets()
-		+frame(dt)
-		+draw()
-		-draw_dialog()
-		-draw_hud()
-		-draw_g_entities()
-		-draw_g_entity(id)
-	}
+tape --> "*" rec
 
-	indow --> "1" r.enderer
-	indow --> "1" m.ixer
-	indow --> "1" g.ame
+class entity {
+	+level_id
+	+type
+	+pos
+	+vel
+	+boxxy
+	+bitmap_image_id
+	+is_solid
 }
 
-namespace r {
-	namespace ss {
-		class heet {
-			+sdl_texture
-			+sw
-			+sh
-			+m
-			+n
-			+draw(i, j)
-			+draw(i)
-			+load(path)
-			+free()
-		}
+entity --> "0..1" image
 
-		class frame {
-			+t
-			+i
-			+j
-		}
+rec <|-- entity
+tape <|-- entity_tape
 
-		class anim {
-			+ssheet_id
-			+frame_v[]
-			+frame_c
-			+get_ssheet()
-			+draw(t)
-			+load(path)
-			+free()
-		}
-
-		anim *-- "*" frame
-		anim "*" -> "1" heet
-	}
-
-	class enderer {
-		#sdl_window
-		#sdl_renderer
-		#sdl_dstrect_translate[2]
-		#projection_matrix
-		-ssheet_v[]
-		-ssanim_v[]
-		+translate(x, y)
-		+ssheet(id)
-		+ssanim(id)
-		+free()
-	}
-
-	note right: matrices must be \n orthogonal because of \n SDL_DrawCopyEx()
-
-	enderer *-- "*" r.ss.heet
-	enderer *-- "*" r.ss.anim
+class level {
+	+name
+	+game_id
 }
 
-namespace m {
-	note "TODO" as TODONOTE
+level *-- "*" entity
 
-	class ixer {
-		#music_v[]
-		#chunk_v[]
-		+music(id)
-		+chunk(id)
-	}
+rec <|-- level
+tape <|-- level_tape
+
+class game {
+	+player_name
+	+current_position
 }
+
+game *-- "*" level
+
+rec <|-- game
+tape <|-- game_tape
+
+class image {
+	+path
+	..
+	+sdl_image
+}
+
+image *-- "1" SDL_image
+
+rec <|-- image
+tape <|-- image_tape
+
+class anim_frame {
+	+t
+	+i
+	+j
+}
+
+class anim {
+	+image_id
+	+path
+	..
+	+fw
+	+fh
+	+framev[]
+}
+
+anim --> "1" image
+anim *-- "*" anim_frame
+
+rec <|-- anim
+tape <|-- anim_tape
+
+class entity_action_anim {
+	+entity_type
+	+anim_id
+	+action_id
+	+t1
+	+t2
+}
+
+entity_action_anim --> "1" anim
+
+rec <|-- entity_action_anim
+tape <|-- entity_action_anim_tape
 
 @enduml
