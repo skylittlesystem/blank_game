@@ -21,56 +21,20 @@
  *
  */
 
-#include <stdbool.h>
-#include <stdio.h>
+#ifndef HAS_IMG_H
+#define HAS_IMG_H
+
 #include <SDL.h>
 
-#include "in.h"
-#include "game.h"
-#include "renderer.h"
-#include "r_game.h"
+#define IMG_C 8
+extern const char* const img_path[IMG_C];
+extern SDL_Surface* img[IMG_C];
 
-#include "img.h"
-#include "ani.h"
+void img_free(unsigned i);
+void img_slurp(unsigned i);
+void img_free_all();
+void img_slurp_all();
+void img_init();
+void img_fini();
 
-bool run = true;
-
-void main_quit()
-{
-	run = false;
-}
-
-/* Teh main function!!11!1ONE */
-int main(int argc, char *argv[])
-{
-	img_slurp_all();
-	ani_slurp_all();
-
-	g_init();
-	in_init();
-	r_init();
-
-	r_tex_load_all();
-
-	g_load(0);
-
-	run = true;
-	while (run)
-	{
-		in_frame();
-		g_frame();
-		r_color(169, 231, 255, 1);
-		r_clear();
-		r_game();
-		r_present();
-	}
-
-	r_fini();
-	in_fini();
-	g_fini();
-
-	/* TODO: teh modules only SDL_QuitSubSystem */
-	SDL_Quit();
-
-	return 0;
-}
+#endif

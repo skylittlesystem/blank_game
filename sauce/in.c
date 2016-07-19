@@ -21,56 +21,64 @@
  *
  */
 
-#include <stdbool.h>
-#include <stdio.h>
 #include <SDL.h>
-
 #include "in.h"
+#include "blank_game.h"
 #include "game.h"
-#include "renderer.h"
-#include "r_game.h"
 
-#include "img.h"
-#include "ani.h"
-
-bool run = true;
-
-void main_quit()
+void in_frame()
 {
-	run = false;
-}
+	SDL_Event e;
+	const Uint8* s;
 
-/* Teh main function!!11!1ONE */
-int main(int argc, char *argv[])
-{
-	img_slurp_all();
-	ani_slurp_all();
-
-	g_init();
-	in_init();
-	r_init();
-
-	r_tex_load_all();
-
-	g_load(0);
-
-	run = true;
-	while (run)
+	while (SDL_PollEvent(&e))
 	{
-		in_frame();
-		g_frame();
-		r_color(169, 231, 255, 1);
-		r_clear();
-		r_game();
-		r_present();
+		switch (e.type)
+		{
+		case SDL_KEYDOWN:
+			switch (e.key.keysym.sym)
+			{
+			default:
+				break;
+			}
+			break;
+
+		case SDL_KEYUP:
+			switch (e.key.keysym.sym)
+			{
+			case SDLK_z:
+				g_in_z();
+				break;
+
+			case SDLK_x:
+				g_in_x();
+				break;
+			}
+			break;
+
+		case SDL_QUIT:
+			main_quit();
+			return;
+
+		default:
+			continue;
+		}
 	}
 
-	r_fini();
-	in_fini();
-	g_fini();
+	s = SDL_GetKeyboardState(NULL);
 
-	/* TODO: teh modules only SDL_QuitSubSystem */
-	SDL_Quit();
+	g_in_arrows(
+		s[SDL_SCANCODE_RIGHT],
+		s[SDL_SCANCODE_UP],
+		s[SDL_SCANCODE_LEFT],
+		s[SDL_SCANCODE_DOWN]
+		);
+}
 
-	return 0;
+void in_init()
+{
+}
+
+void in_fini()
+{
 }

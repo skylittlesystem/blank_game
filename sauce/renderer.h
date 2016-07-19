@@ -21,56 +21,33 @@
  *
  */
 
-#include <stdbool.h>
-#include <stdio.h>
-#include <SDL.h>
+#ifndef HAS_RENDERER_H
+#define HAS_RENDERER_H
 
-#include "in.h"
-#include "game.h"
-#include "renderer.h"
-#include "r_game.h"
+#define R_TITLE "blank_game"
+#define R_W 320
+#define R_H 240
+#define R_WIN_W (4*R_W)
+#define R_WIN_H (4*R_H)
 
-#include "img.h"
-#include "ani.h"
+void r_moveto(int x, int y);
+#define r_movetov(v) r_moveto(v[0], v[1])
+void r_color(
+		unsigned char r,
+		unsigned char g,
+		unsigned char b,
+		unsigned char a
+		);
+#define r_colorv(v) r_color(v[0], v[1], v[2], v[3])
+void r_clear();
+void r_present();
+void r_tex(unsigned id);
+void r_tex_load(unsigned id);
+void r_tex_load_all();
+void r_tex_unload(unsigned id);
+void r_tex_unload_all();
+void r_ani(unsigned id, unsigned t);
+void r_init();
+void r_fini();
 
-bool run = true;
-
-void main_quit()
-{
-	run = false;
-}
-
-/* Teh main function!!11!1ONE */
-int main(int argc, char *argv[])
-{
-	img_slurp_all();
-	ani_slurp_all();
-
-	g_init();
-	in_init();
-	r_init();
-
-	r_tex_load_all();
-
-	g_load(0);
-
-	run = true;
-	while (run)
-	{
-		in_frame();
-		g_frame();
-		r_color(169, 231, 255, 1);
-		r_clear();
-		r_game();
-		r_present();
-	}
-
-	r_fini();
-	in_fini();
-	g_fini();
-
-	/* TODO: teh modules only SDL_QuitSubSystem */
-	SDL_Quit();
-
-	return 0;
-}
+#endif

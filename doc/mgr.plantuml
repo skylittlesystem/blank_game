@@ -1,0 +1,26 @@
+@startuml
+
+abstract class mgr_drv {
+	+id_sz
+	+x_sz
+
+	+open_fp
+	+slurp(dep_v, id, x)
+	+free(dep_v, x)
+}
+
+class mgr {
+	+drv
+
+	+n
+
+	+refc_v
+	+id_v
+	+x_v
+
+	+free
+}
+
+mgr --> "1" mgr_drv
+
+@enduml

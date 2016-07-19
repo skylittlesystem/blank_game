@@ -21,56 +21,63 @@
  *
  */
 
-#include <stdbool.h>
-#include <stdio.h>
-#include <SDL.h>
-
-#include "in.h"
-#include "game.h"
-#include "renderer.h"
-#include "r_game.h"
+#include <assert.h>
+#include <SDL_image.h>
 
 #include "img.h"
-#include "ani.h"
 
-bool run = true;
-
-void main_quit()
+const char* const img_path[IMG_C] =
 {
-	run = false;
+	"data/img/naught.png",
+	"data/ani/ailin/ailin.png",
+	"data/ani/pacsatan/pacsatan.png",
+	"data/img/level_clarice.png",
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+};
+
+SDL_Surface* img[IMG_C];
+
+void img_free(unsigned id)
+{
+	SDL_FreeSurface(img[id]);
 }
 
-/* Teh main function!!11!1ONE */
-int main(int argc, char *argv[])
+void img_slurp(unsigned id)
 {
-	img_slurp_all();
-	ani_slurp_all();
+	if (!img_path[id])
+		return;
 
-	g_init();
-	in_init();
-	r_init();
+	img[id] = IMG_Load(img_path[id]);
 
-	r_tex_load_all();
+	assert (img[id]); /* TODO: handling */
+}
 
-	g_load(0);
+void img_free_all()
+{
+	unsigned id;
 
-	run = true;
-	while (run)
-	{
-		in_frame();
-		g_frame();
-		r_color(169, 231, 255, 1);
-		r_clear();
-		r_game();
-		r_present();
-	}
+	for (id = 0; id < IMG_C; ++id)
+		img_free(id);
+}
 
-	r_fini();
-	in_fini();
-	g_fini();
+void img_slurp_all()
+{
+	unsigned id;
 
-	/* TODO: teh modules only SDL_QuitSubSystem */
-	SDL_Quit();
+	for (id = 0; id < IMG_C; ++id)
+		img_slurp(id);
+}
 
-	return 0;
+void img_init()
+{
+	assert (IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG); /* TODO: handling */
+	memset(img, 0, sizeof (img));
+}
+
+void img_fini()
+{
+	IMG_Quit();
 }

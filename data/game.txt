@@ -1,0 +1,26 @@
+images
+
+1	asd/img1.png
+3	asd/clarice.png
+5	asd/img2.png
+4	asd/pacsatan.png
+
+music
+
+mus/room.mp3
+mus/fuckyou.mp3
+
+sfx
+
+sfx/plac.mp3
+sfx/zap.mp3
+sfx/pow.mp3
+sfx/zoing.mp3
+
+game
+
+0 0 something 1 2.3
+
+lvl
+
+

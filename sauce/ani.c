@@ -21,56 +21,78 @@
  *
  */
 
-#include <stdbool.h>
+#include <assert.h>
 #include <stdio.h>
-#include <SDL.h>
-
-#include "in.h"
-#include "game.h"
-#include "renderer.h"
-#include "r_game.h"
-
-#include "img.h"
 #include "ani.h"
 
-bool run = true;
-
-void main_quit()
+const char* const ani_path[ANI_C] =
 {
-	run = false;
-}
+	"data/ani/naught/naught.txt",
+	"data/ani/ailin/ailin.txt",
+	"data/ani/pacsatan/pacsatan.txt",
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+};
 
-/* Teh main function!!11!1ONE */
-int main(int argc, char *argv[])
+struct ani ani[ANI_C];
+
+void ani_slurp(unsigned id)
 {
-	img_slurp_all();
-	ani_slurp_all();
+	FILE* fp;
+	struct ani* a;
+	struct ani_frm* f;
+	unsigned i, lastt;
 
-	g_init();
-	in_init();
-	r_init();
+	if (!ani_path[id])
+		return;
 
-	r_tex_load_all();
+	fp = fopen(ani_path[id], "rb");
+	assert (fp); /* TODO: handling  */
 
-	g_load(0);
+	a = &ani[id];
+	assert (
+		fscanf(
+			fp,
+			" %u %u %u %u ",
+			&a->tex_id,
+			&a->w,
+			&a->h,
+			&a->c
+		      )
+		== 4
+	       ); /* TODO: handling */
 
-	run = true;
-	while (run)
+	lastt = 0;
+	for (i = 0, f = a->v; i < a->c; ++i, ++f)
 	{
-		in_frame();
-		g_frame();
-		r_color(169, 231, 255, 1);
-		r_clear();
-		r_game();
-		r_present();
+		assert (
+			fscanf(
+				fp,
+				" %u %hhu %hhu %hu ",
+				&f->t,
+				&f->i,
+				&f->j,
+				&f->sfx_id
+			      )
+			== 4
+		       ); /* TODO: handling */
+
+		assert (lastt <= f->t); /* just in case =O3 */
+		lastt = f->t;
 	}
 
-	r_fini();
-	in_fini();
-	g_fini();
+	assert (a->v[0].t == 0); /* just in case =O3(2) */
 
-	/* TODO: teh modules only SDL_QuitSubSystem */
-	SDL_Quit();
+	fclose(fp);
+}
 
-	return 0;
+void ani_slurp_all()
+{
+	unsigned id;
+
+	for (id = 0; id < ANI_C; ++id)
+		ani_slurp(id);
 }

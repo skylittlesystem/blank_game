@@ -21,33 +21,23 @@
  *
  */
 
-#ifndef HAS_SBLAS3_H
-#define HAS_SBLAS3_H
+#ifndef HAS_G_ZAWARUDO
+#define HAS_G_ZAWARUDO
 
-#include <stdbool.h>
+#define G_ZW_FPS 25
+#define G_ZW_MSPF (1000/G_ZW_FPS)
 
-typedef float vec;
+#include <SDL.h>
 
-vec dot3(const vec* restrict x, const vec* restrict y);
-void axpy3(vec alpha, const vec* restrict x, vec* restrict y);
-void scal3(vec alpha, vec* restrict x);
-void gemv3(
-		bool trans,
-		vec alpha,
-		const vec* restrict A,
-		const vec* restrict x,
-		vec beta,
-		vec* restrict y
-	    );
+struct g_zw_wryyy
+{
+	unsigned sroller_id;
+	unsigned jojo_id;
+	SDL_Rect boxxy;
+};
 
-void gemm3(
-		bool transA,
-		bool transB,
-		vec alpha,
-		const vec* restrict A,
-		const vec* restrict B,
-		vec beta,
-		vec* restrict C
-	  );
+void g_zw_frame();
+void g_zw_init();
+void g_zw_fini();
 
 #endif

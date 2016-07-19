@@ -21,56 +21,78 @@
  *
  */
 
+#ifndef HAS_GAME_H
+#define HAS_GAME_H
+
 #include <stdbool.h>
-#include <stdio.h>
 #include <SDL.h>
 
-#include "in.h"
-#include "game.h"
-#include "renderer.h"
-#include "r_game.h"
-
-#include "img.h"
-#include "ani.h"
-
-bool run = true;
-
-void main_quit()
+enum g_ent_type
 {
-	run = false;
-}
+	G_ENT_NAUGHT = 0,
+	G_ENT_AILIN,
+	G_ENT_PACSATAN,
+	G_ENT_LEVEL_CLARICE,
+	G_ENT_LEVEL_LABYRINTH,
+	G_ENT_LEVEL_ROOM,
+	G_ENT_TYPE_C
+};
 
-/* Teh main function!!11!1ONE */
-int main(int argc, char *argv[])
+struct g_ent
 {
-	img_slurp_all();
-	ani_slurp_all();
+	enum g_ent_type type;
+	SDL_Rect boxxy;
+	int v[2];
+	unsigned bmp_id;
+};
 
-	g_init();
-	in_init();
-	r_init();
+struct g_lvl
+{
+	char miau;
+};
 
-	r_tex_load_all();
+struct game
+{
+	unsigned lvl_id;
+};
 
-	g_load(0);
+extern unsigned long g_t, g_dt;
 
-	run = true;
-	while (run)
-	{
-		in_frame();
-		g_frame();
-		r_color(169, 231, 255, 1);
-		r_clear();
-		r_game();
-		r_present();
-	}
+#define G_C 3
+#define G_LVL_C 8
+#define G_ENT_C 32
 
-	r_fini();
-	in_fini();
-	g_fini();
+extern char* const const g_path_fmt;
+extern const char* const g_lvl_path_fmt[G_LVL_C];
 
-	/* TODO: teh modules only SDL_QuitSubSystem */
-	SDL_Quit();
+extern unsigned g_id;
+extern struct game game;
 
-	return 0;
-}
+extern unsigned g_lvl_id;
+extern struct g_lvl g_lvl;
+
+extern struct g_ent g_ent[G_ENT_C];
+
+
+/* ent */
+
+/* lvl */
+//static const char* g_lvl_path(unsigned id);
+//static void g_lvl_slurp(unsigned id);
+void g_lvl_load(unsigned id);
+
+/* game */
+void g_in_arrows(bool r, bool u, bool l, bool d);
+void g_in_x();
+void g_in_z();
+
+//static void g_tick();
+void g_frame();
+//static const char* g_path(unsigned id);
+//static void g_slurp(unsigned id);
+void g_load(unsigned id);
+void g_quit();
+void g_init();
+void g_fini();
+
+#endif

@@ -1,104 +1,84 @@
 @startuml
 
-abstract class rec {
-	+id
-	..
-	#refc
+class blank_game {
 }
 
-abstract class tape {
-	+v[]
-	__
-	+open(id)
-	+save(id)
-	+close(id)
-	+gc()
-	..
-	{abstract} +open_(rec, id)
-	{abstract} +save_(rec, id)
-	{abstract} +close_(rec, id)
-}
-
-tape --> "*" rec
-
-class entity {
-	+level_id
-	+type
-	+pos
-	+vel
-	+boxxy
-	+bitmap_image_id
-	+is_solid
-}
-
-entity --> "0..1" image
-
-rec <|-- entity
-tape <|-- entity_tape
-
-class level {
-	+name
-	+game_id
-}
-
-level *-- "*" entity
-
-rec <|-- level
-tape <|-- level_tape
+blank_game --> "*" game
+blank_game --> "1" game : current
+blank_game --> "1" renderer
+blank_game --> "1" r_game
+blank_game --> "1" in
+blank_game --> "1" mix
 
 class game {
-	+player_name
-	+current_position
 }
 
-game *-- "*" level
+game *-- "1" g_dialog
+game *-- "1" g_zawarudo
+game *-- "*" g_lvl
+game --> "1" g_lvl : current
 
-rec <|-- game
-tape <|-- game_tape
-
-class image {
-	+path
-	..
-	+sdl_image
+class g_lvl {
 }
 
-image *-- "1" SDL_image
+g_lvl *-- "*" g_ent
 
-rec <|-- image
-tape <|-- image_tape
-
-class anim_frame {
-	+t
-	+i
-	+j
+class g_ent {
 }
 
-class anim {
-	+image_id
-	+path
-	..
-	+fw
-	+fh
-	+framev[]
+g_ent --> "0..1" img
+
+class g_dialog {
 }
 
-anim --> "1" image
-anim *-- "*" anim_frame
-
-rec <|-- anim
-tape <|-- anim_tape
-
-class entity_action_anim {
-	+entity_type
-	+anim_id
-	+action_id
-	+t1
-	+t2
+class g_zawarudo {
 }
 
-entity_action_anim --> "1" anim
+class ani {
+}
 
-rec <|-- entity_action_anim
-tape <|-- entity_action_anim_tape
+ani --> "1" img
+ani *-- "*" ani_frm
+
+class ani_frm {
+}
+
+ani_frm --> "*" sfx
+
+class img {
+}
+
+img --> "1" SDL_Surface
+
+class in {
+}
+
+class mix {
+}
+
+mix --> "1" game : current
+mix --> "*" mus
+mix --> "*" sfx
+
+class mus {
+}
+
+mus --> "1" Mix_Music
+
+class sfx {
+}
+
+sfx --> "1" Mix_Chunk
+
+class renderer {
+}
+
+renderer --> "*" ani
+
+class r_game {
+}
+
+r_game --> "1" renderer
+r_game --> "1" game : current
 
 @enduml

@@ -21,56 +21,33 @@
  *
  */
 
-#include <stdbool.h>
-#include <stdio.h>
-#include <SDL.h>
+#ifndef HAS_MIX_H
+#define HAS_MIX_H
 
-#include "in.h"
-#include "game.h"
-#include "renderer.h"
-#include "r_game.h"
+#include <SDL_mixer.h>
 
-#include "img.h"
-#include "ani.h"
+#define MUS_C 8
+extern const char* const mus_path[MUS_C];
+extern Mix_Music* mus[MUS_C];
 
-bool run = true;
+#define SFX_C 8
+extern const char* const sfx_path[SFX_C];
+extern Mix_Chunk* sfx[SFX_C];
 
-void main_quit()
-{
-	run = false;
-}
+/* mus */
+void mus_free(unsigned i);
+void mus_slurp(unsigned i);
+void mus_free_all();
+void mus_slurp_all();
 
-/* Teh main function!!11!1ONE */
-int main(int argc, char *argv[])
-{
-	img_slurp_all();
-	ani_slurp_all();
+/* sfx */
+void sfx_free(unsigned i);
+void sfx_slurp(unsigned i);
+void sfx_free_all();
+void sfx_slurp_all();
 
-	g_init();
-	in_init();
-	r_init();
+/* mix */
+void mix_init();
+void mix_fini();
 
-	r_tex_load_all();
-
-	g_load(0);
-
-	run = true;
-	while (run)
-	{
-		in_frame();
-		g_frame();
-		r_color(169, 231, 255, 1);
-		r_clear();
-		r_game();
-		r_present();
-	}
-
-	r_fini();
-	in_fini();
-	g_fini();
-
-	/* TODO: teh modules only SDL_QuitSubSystem */
-	SDL_Quit();
-
-	return 0;
-}
+#endif

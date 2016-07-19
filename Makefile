@@ -25,13 +25,14 @@ LDFLAGS := \
 LD := $(LD)
 
 OBJ := \
-	build/r/enderer.o \
-	build/m/ixer.o \
-	build/w/indow.o \
-	build/w/draw.o \
-	build/g/ame.o \
-	build/z/awarudo.o \
-	build/misc/sblas3.o \
+	build/mix.o \
+	build/img.o \
+	build/ani.o \
+	build/game.o \
+	build/g_zawarudo.o \
+	build/renderer.o \
+	build/r_game.o \
+	build/in.o \
 	build/blank_game.o \
 
 PRG := \

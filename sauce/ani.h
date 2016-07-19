@@ -21,56 +21,33 @@
  *
  */
 
-#include <stdbool.h>
-#include <stdio.h>
-#include <SDL.h>
+#ifndef HAS_ANI_H
+#define HAS_ANI_H
 
-#include "in.h"
-#include "game.h"
-#include "renderer.h"
-#include "r_game.h"
+#define ANI_FRM_C 256
+#define ANI_C 8
 
-#include "img.h"
-#include "ani.h"
-
-bool run = true;
-
-void main_quit()
+struct ani_frm
 {
-	run = false;
-}
+	unsigned t;
+	unsigned char i;
+	unsigned char j;
+	unsigned short sfx_id;
+};
 
-/* Teh main function!!11!1ONE */
-int main(int argc, char *argv[])
+struct ani
 {
-	img_slurp_all();
-	ani_slurp_all();
+	unsigned tex_id;
+	unsigned w;
+	unsigned h;
+	unsigned c;
+	struct ani_frm v[ANI_FRM_C];
+};
 
-	g_init();
-	in_init();
-	r_init();
+extern const char* const ani_path[ANI_C];
+extern struct ani ani[ANI_C];
 
-	r_tex_load_all();
+void ani_slurp(unsigned id);
+void ani_slurp_all();
 
-	g_load(0);
-
-	run = true;
-	while (run)
-	{
-		in_frame();
-		g_frame();
-		r_color(169, 231, 255, 1);
-		r_clear();
-		r_game();
-		r_present();
-	}
-
-	r_fini();
-	in_fini();
-	g_fini();
-
-	/* TODO: teh modules only SDL_QuitSubSystem */
-	SDL_Quit();
-
-	return 0;
-}
+#endif

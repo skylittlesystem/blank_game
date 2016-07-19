@@ -21,56 +21,41 @@
  *
  */
 
-#include <stdbool.h>
-#include <stdio.h>
-#include <SDL.h>
-
-#include "in.h"
-#include "game.h"
 #include "renderer.h"
+#include "game.h"
 #include "r_game.h"
 
-#include "img.h"
-#include "ani.h"
-
-bool run = true;
-
-void main_quit()
+static int type_2_ani[G_ENT_TYPE_C] =
 {
-	run = false;
+	0,
+	1,
+	2,
+	0,
+	0,
+	0,
+};
+
+void r_g_ent(unsigned i)
+{
+	struct g_ent* e;
+	e = &g_ent[i];
+
+	if (e->type == G_ENT_NAUGHT)
+		return;
+
+	r_moveto(e->boxxy.x, e->boxxy.y);
+	r_ani(type_2_ani[e->type], g_t);
 }
 
-/* Teh main function!!11!1ONE */
-int main(int argc, char *argv[])
+void r_g_lvl()
 {
-	img_slurp_all();
-	ani_slurp_all();
+	unsigned i;
 
-	g_init();
-	in_init();
-	r_init();
+	for (i = 0; i < G_ENT_C; ++i)
+		r_g_ent(i);
+}
 
-	r_tex_load_all();
-
-	g_load(0);
-
-	run = true;
-	while (run)
-	{
-		in_frame();
-		g_frame();
-		r_color(169, 231, 255, 1);
-		r_clear();
-		r_game();
-		r_present();
-	}
-
-	r_fini();
-	in_fini();
-	g_fini();
-
-	/* TODO: teh modules only SDL_QuitSubSystem */
-	SDL_Quit();
-
-	return 0;
+void r_game()
+{
+	r_g_lvl();
 }

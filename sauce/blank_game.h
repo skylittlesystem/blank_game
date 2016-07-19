@@ -21,56 +21,9 @@
  *
  */
 
-#include <stdbool.h>
-#include <stdio.h>
-#include <SDL.h>
+#ifndef HAS_BLANK_GAME_H
+#define HAS_BLANK_GAME_H
 
-#include "in.h"
-#include "game.h"
-#include "renderer.h"
-#include "r_game.h"
+void main_quit();
 
-#include "img.h"
-#include "ani.h"
-
-bool run = true;
-
-void main_quit()
-{
-	run = false;
-}
-
-/* Teh main function!!11!1ONE */
-int main(int argc, char *argv[])
-{
-	img_slurp_all();
-	ani_slurp_all();
-
-	g_init();
-	in_init();
-	r_init();
-
-	r_tex_load_all();
-
-	g_load(0);
-
-	run = true;
-	while (run)
-	{
-		in_frame();
-		g_frame();
-		r_color(169, 231, 255, 1);
-		r_clear();
-		r_game();
-		r_present();
-	}
-
-	r_fini();
-	in_fini();
-	g_fini();
-
-	/* TODO: teh modules only SDL_QuitSubSystem */
-	SDL_Quit();
-
-	return 0;
-}
+#endif
