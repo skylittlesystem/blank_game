@@ -68,14 +68,14 @@ static void g_lvl_slurp(unsigned id)
 
 	while (!feof(fp))
 	{
+		int r;
 		unsigned id;
 		struct g_ent* e;
 
 		assert (fscanf(fp, " %u ", &id) == 1); /* TODO: handling */
 		e = &g_ent[id];
 
-		assert (
-			fscanf(
+		r = fscanf(
 				fp,
 				" %u %d %d %u %u %d %d %u %u ",
 				&e->type,
@@ -87,9 +87,9 @@ static void g_lvl_slurp(unsigned id)
 				&e->v[1],
 				&e->bmp_id,
 				&e->target_id
-			      )
-			== 9
-		       ); /* TODO: handling */
+			  );
+
+		assert (r == 9); /* TODO: handling */
 	}
 
 	fclose(fp);
@@ -148,12 +148,14 @@ static const char* g_path(unsigned id)
 
 static void g_slurp(unsigned id)
 {
+	int r;
 	FILE* fp;
 
 	fp = fopen(g_path(id), "r");
 	assert (fp); /* TODO: handling */
 
-	assert (fscanf(fp, " %u ", &game.lvl_id) == 1); /* TODO: handling */
+	r = fscanf(fp, " %u ", &game.lvl_id);
+	assert (r == 1); /* TODO: handling */
 
 	fclose(fp);
 }
