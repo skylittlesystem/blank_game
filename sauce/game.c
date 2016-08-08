@@ -26,6 +26,7 @@
 
 #include "game.h"
 #include "g_zawarudo.h"
+#include "g_ent.h"
 
 unsigned long g_t, g_dt;
 
@@ -49,10 +50,6 @@ struct game game;
 
 unsigned g_lvl_id;
 struct g_lvl g_lvl;
-
-struct g_ent g_ent[G_ENT_C];
-
-/* ent */
 
 /* lvl */
 static const char* g_lvl_path(unsigned id)
@@ -80,7 +77,7 @@ static void g_lvl_slurp(unsigned id)
 		assert (
 			fscanf(
 				fp,
-				" %u %d %d %u %u %d %d %u ",
+				" %u %d %d %u %u %d %d %u %u ",
 				&e->type,
 				&e->boxxy.x,
 				&e->boxxy.y,
@@ -88,9 +85,10 @@ static void g_lvl_slurp(unsigned id)
 				&e->boxxy.h,
 				&e->v[0],
 				&e->v[1],
-				&e->bmp_id
+				&e->bmp_id,
+				&e->target_id
 			      )
-			== 8
+			== 9
 		       ); /* TODO: handling */
 	}
 
@@ -104,7 +102,7 @@ void g_lvl_load(unsigned id)
 }
 
 /* game */
-#define V 1
+#define V 4
 void g_in_arrows(bool r, bool u, bool l, bool d)
 {
 	struct g_ent* e;
@@ -138,6 +136,7 @@ void g_frame()
 {
 	g_tick();
 	g_zw_frame();
+	g_ent_frame();
 }
 
 static const char* g_path(unsigned id)

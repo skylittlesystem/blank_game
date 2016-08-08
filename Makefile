@@ -30,6 +30,7 @@ OBJ := \
 	build/ani.o \
 	build/game.o \
 	build/g_zawarudo.o \
+	build/g_ent.o \
 	build/renderer.o \
 	build/r_game.o \
 	build/in.o \

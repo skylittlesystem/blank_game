@@ -109,8 +109,10 @@ void r_ani(unsigned id, unsigned t)
 	SDL_Rect srcrect, dstrect;
 	unsigned t_c;
 
-
 	a = &ani[id];
+
+	assert (a); /* just in case ;O3 */
+
 	t_c = a->v[a->c - 1].t;
 
 	if (t_c == 0)

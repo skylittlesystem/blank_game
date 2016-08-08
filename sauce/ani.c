@@ -30,7 +30,7 @@ const char* const ani_path[ANI_C] =
 	"data/ani/naught/naught.txt",
 	"data/ani/ailin/ailin.txt",
 	"data/ani/pacsatan/pacsatan.txt",
-	NULL,
+	"data/ani/level_clarice/level_clarice.txt",
 	NULL,
 	NULL,
 	NULL,

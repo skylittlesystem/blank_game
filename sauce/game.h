@@ -27,24 +27,7 @@
 #include <stdbool.h>
 #include <SDL.h>
 
-enum g_ent_type
-{
-	G_ENT_NAUGHT = 0,
-	G_ENT_AILIN,
-	G_ENT_PACSATAN,
-	G_ENT_LEVEL_CLARICE,
-	G_ENT_LEVEL_LABYRINTH,
-	G_ENT_LEVEL_ROOM,
-	G_ENT_TYPE_C
-};
-
-struct g_ent
-{
-	enum g_ent_type type;
-	SDL_Rect boxxy;
-	int v[2];
-	unsigned bmp_id;
-};
+#include "g_ent.h"
 
 struct g_lvl
 {
@@ -60,7 +43,6 @@ extern unsigned long g_t, g_dt;
 
 #define G_C 3
 #define G_LVL_C 8
-#define G_ENT_C 32
 
 extern char* const const g_path_fmt;
 extern const char* const g_lvl_path_fmt[G_LVL_C];
@@ -70,9 +52,6 @@ extern struct game game;
 
 extern unsigned g_lvl_id;
 extern struct g_lvl g_lvl;
-
-extern struct g_ent g_ent[G_ENT_C];
-
 
 /* ent */
 

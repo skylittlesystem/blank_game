@@ -21,41 +21,36 @@
  *
  */
 
-#include "renderer.h"
-#include "game.h"
-#include "r_game.h"
+#ifndef HAS_G_ENT_H
+#define HAS_G_ENT_H
 
-static int type_2_ani[G_ENT_TYPE_C] =
+enum g_ent_type
 {
-	0,
-	1,
-	2,
-	3,
-	0,
-	0,
+	G_ENT_NAUGHT = 0,
+	G_ENT_AILIN,
+	G_ENT_PACSATAN,
+	G_ENT_LEVEL_CLARICE,
+	G_ENT_LEVEL_LABYRINTH,
+	G_ENT_LEVEL_ROOM,
+	G_ENT_TYPE_C
 };
 
-void r_g_ent(unsigned i)
+struct g_ent
 {
-	struct g_ent* e;
-	e = &g_ent[i];
+	enum g_ent_type type;
+	SDL_Rect boxxy;
+	int v[2];
+	unsigned bmp_id;
+	unsigned target_id;
+};
 
-	if (e->type == G_ENT_NAUGHT)
-		return;
+#define G_ENT_C 32
+extern struct g_ent g_ent[G_ENT_C];
 
-	r_moveto(e->boxxy.x, e->boxxy.y);
-	r_ani(type_2_ani[e->type], g_t);
-}
+void g_ent_frame();
 
-void r_g_lvl()
-{
-	unsigned i;
+#include "g_zawarudo.h"
 
-	for (i = 0; i < G_ENT_C; ++i)
-		r_g_ent(i);
-}
+void g_ent_wryyy(struct g_zw_wryyy* wryyy);
 
-void r_game()
-{
-	r_g_lvl();
-}
+#endif
