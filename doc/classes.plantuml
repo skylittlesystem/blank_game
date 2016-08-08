@@ -7,8 +7,8 @@ blank_game --> "*" game
 blank_game --> "1" game : current
 blank_game --> "1" renderer
 blank_game --> "1" r_game
-blank_game --> "1" in
 blank_game --> "1" mix
+blank_game <--> "1" in
 
 class game {
 }
@@ -53,12 +53,19 @@ img --> "1" SDL_Surface
 class in {
 }
 
+in --> "1" game : current
+
 class mix {
 }
 
-mix --> "1" game : current
 mix --> "*" mus
 mix --> "*" sfx
+
+class mix_game {
+}
+
+mix_game --> "1" game : current
+mix_game --> "1" mix
 
 class mus {
 }
