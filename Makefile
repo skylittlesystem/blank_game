@@ -26,6 +26,7 @@ LD := $(LD)
 
 OBJ := \
 	build/mix.o \
+	build/mix_game.o \
 	build/img.o \
 	build/ani.o \
 	build/game.o \

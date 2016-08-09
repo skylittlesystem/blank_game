@@ -29,6 +29,8 @@
 #include "game.h"
 #include "renderer.h"
 #include "r_game.h"
+#include "mix.h"
+#include "mix_game.h"
 
 #include "img.h"
 #include "ani.h"
@@ -48,9 +50,13 @@ int main(int argc, char *argv[])
 
 	g_init();
 	in_init();
-	r_init();
 
+	r_init();
 	r_tex_load_all();
+
+	mix_init();
+	mix_g_init();
+	mus_slurp_all();
 
 	g_load(0);
 
@@ -59,12 +65,15 @@ int main(int argc, char *argv[])
 	{
 		in_frame();
 		g_frame();
+		mix_g_frame();
 		r_color(169, 231, 255, 1);
 		r_clear();
 		r_game();
 		r_present();
 	}
 
+	mix_g_fini();
+	mix_fini();
 	r_fini();
 	in_fini();
 	g_fini();

@@ -30,7 +30,7 @@
 const char* const mus_path[MUS_C] =
 {
 	NULL,
-	NULL,
+	"data/mus/level_clarice.mp3",
 	NULL,
 	NULL,
 	NULL,
@@ -56,6 +56,11 @@ const char* const sfx_path[SFX_C] =
 Mix_Chunk* sfx[SFX_C];
 
 /* mus */
+void mus_play(unsigned id)
+{
+	Mix_PlayMusic(mus[id], -1);
+}
+
 void mus_free(unsigned id)
 {
 	Mix_FreeMusic(mus[id]);
@@ -63,9 +68,11 @@ void mus_free(unsigned id)
 
 void mus_slurp(unsigned id)
 {
-	mus[id] = Mix_LoadMUS(mus_path[id]);
-
-	assert (mus[id]); /* TODO: handling */
+	if (mus_path[id])
+	{
+		mus[id] = Mix_LoadMUS(mus_path[id]);
+		assert (mus[id]); /* TODO: handling */
+	}
 }
 
 void mus_free_all()
@@ -92,9 +99,11 @@ void sfx_free(unsigned id)
 
 void sfx_slurp(unsigned id)
 {
-	sfx[id] = Mix_LoadWAV(sfx_path[id]);
-
-	assert (sfx[id]); /* TODO: handling */
+	if (sfx_path[id])
+	{
+		sfx[id] = Mix_LoadWAV(sfx_path[id]);
+		assert (sfx[id]); /* TODO: handling */
+	}
 }
 
 void sfx_free_all()
@@ -120,7 +129,7 @@ void mix_init()
 	assert (Mix_Init(MIX_INIT_MP3) & MIX_INIT_MP3); /* TODO: handling */
 	assert (
 			Mix_OpenAudio(
-				MIX_DEFAULT_FREQUENCY,
+				MIX_HZ,
 				MIX_DEFAULT_FORMAT,
 				2,
 				4096

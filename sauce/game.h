@@ -29,8 +29,18 @@
 
 #include "g_ent.h"
 
+enum g_mus_id
+{
+	G_MUS_SILENCE = 0,
+	G_MUS_LEVEL_CLARICE,
+	G_MUS_C
+};
+
 struct g_lvl
 {
+	unsigned base_mus_id;
+	unsigned mus_id;
+	unsigned long mus_t;
 	char miau;
 };
 
@@ -44,6 +54,7 @@ struct game
 
 #define G_C 3
 #define G_LVL_C 8
+#define G_LVL_ST_C 8
 
 extern char* const const g_path_fmt;
 extern const char* const g_lvl_path_fmt[G_LVL_C];

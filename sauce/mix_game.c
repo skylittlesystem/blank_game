@@ -21,36 +21,25 @@
  *
  */
 
-#ifndef HAS_MIX_H
-#define HAS_MIX_H
+#include "mix_game.h"
+#include "game.h"
 
-#include <SDL_mixer.h>
+static int current_mus_id = 0;
 
-#define MIX_HZ 44100
+void mix_g_frame()
+{
+	if (current_mus_id != g_lvl.mus_id)
+	{
+		mus_play(g_lvl.mus_id);
+		current_mus_id = g_lvl.mus_id;
+	}
+}
 
-#define MUS_C 8
-extern const char* const mus_path[MUS_C];
-extern Mix_Music* mus[MUS_C];
+void mix_g_init()
+{
+	current_mus_id = 0;
+}
 
-#define SFX_C 8
-extern const char* const sfx_path[SFX_C];
-extern Mix_Chunk* sfx[SFX_C];
-
-/* mus */
-void mus_play(unsigned i);
-void mus_free(unsigned i);
-void mus_slurp(unsigned i);
-void mus_free_all();
-void mus_slurp_all();
-
-/* sfx */
-void sfx_free(unsigned i);
-void sfx_slurp(unsigned i);
-void sfx_free_all();
-void sfx_slurp_all();
-
-/* mix */
-void mix_init();
-void mix_fini();
-
-#endif
+void mix_g_fini()
+{
+}

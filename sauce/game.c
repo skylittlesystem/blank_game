@@ -60,17 +60,24 @@ static const char* g_lvl_path(unsigned id)
 static void g_lvl_slurp(unsigned id)
 {
 	FILE* fp;
+	int r;
 
 	fp = fopen(g_lvl_path(id), "r");
 	assert (fp); /* TODO: handling */
 
+	memset (&g_lvl, 0, sizeof (g_lvl));
+
+	r = fscanf(fp, " %u ", &g_lvl.base_mus_id);
+	assert (r == 1);
+
 	while (!feof(fp))
 	{
-		int r;
 		unsigned id;
 		struct g_ent* e;
 
-		assert (fscanf(fp, " %u ", &id) == 1); /* TODO: handling */
+		r = fscanf(fp, " %u ", &id);
+		assert (r == 1); /* TODO: handling */
+
 		e = &g_ent[id];
 
 		r = fscanf(
@@ -96,6 +103,8 @@ static void g_lvl_slurp(unsigned id)
 void g_lvl_load(unsigned id)
 {
 	g_lvl_slurp(id);
+	g_lvl.mus_id = g_lvl.base_mus_id;
+	g_lvl.mus_t = game.t;
 	g_zw_init();
 }
 
