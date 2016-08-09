@@ -66,6 +66,7 @@ static bool trace_boxxy_vs_pixxy()
 	return false;
 }
 
+/* TODO: collisions sometimes leave gaps if velocity is not 1 */
 static bool trace()
 {
 	struct g_ent* j;
