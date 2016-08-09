@@ -30,6 +30,8 @@
 #define R_WIN_W (4*R_W)
 #define R_WIN_H (4*R_H)
 
+#include <SDL.h>
+
 void r_moveto(int x, int y);
 #define r_movetov(v) r_moveto(v[0], v[1])
 void r_color(
@@ -46,6 +48,7 @@ void r_tex_load(unsigned id);
 void r_tex_load_all();
 void r_tex_unload(unsigned id);
 void r_tex_unload_all();
+void r_boxxy(SDL_Rect* r);
 void r_ani(unsigned id, unsigned t);
 void r_init();
 void r_fini();

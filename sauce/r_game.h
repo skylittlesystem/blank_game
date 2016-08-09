@@ -24,6 +24,7 @@
 #ifndef HAS_R_GAME_H
 #define HAS_R_GAME_H
 
+void r_g_toggle_boxxies();
 void r_g_ent(unsigned i);
 void r_g_lvl();
 void r_game();

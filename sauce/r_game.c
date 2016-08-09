@@ -36,6 +36,7 @@ static int type_2_ani[G_ENT_TYPE_C] =
 };
 
 static unsigned z_order[G_ENT_C] = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+static bool show_boxxies = false;
 
 static int z_cmp(const unsigned* id_a, const unsigned* id_b)
 {
@@ -51,6 +52,11 @@ static int z_cmp(const unsigned* id_a, const unsigned* id_b)
 	return 0;
 }
 
+void r_g_toggle_boxxies()
+{
+	show_boxxies = !show_boxxies;
+}
+
 void r_g_ent(unsigned i)
 {
 	struct g_ent* e;
@@ -59,7 +65,15 @@ void r_g_ent(unsigned i)
 	if (e->type == G_ENT_NAUGHT)
 		return;
 
+
 	r_moveto(e->boxxy.x, e->boxxy.y);
+
+	if (show_boxxies)
+	{
+		r_color(255, 0, 0, 255);
+		r_boxxy(&e->boxxy);
+	}
+
 	r_ani(type_2_ani[e->type], game.t);
 }
 

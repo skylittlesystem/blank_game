@@ -102,6 +102,11 @@ void r_tex_unload_all()
 		r_tex_unload(i);
 }
 
+void r_boxxy(SDL_Rect* r)
+{
+	SDL_RenderFillRect(sdl_renderer, r);
+}
+
 void r_ani(unsigned id, unsigned t)
 {
 	struct ani* a;

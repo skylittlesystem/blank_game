@@ -25,6 +25,7 @@
 #include "in.h"
 #include "blank_game.h"
 #include "game.h"
+#include "r_game.h"
 
 void in_frame()
 {
@@ -46,6 +47,10 @@ void in_frame()
 		case SDL_KEYUP:
 			switch (e.key.keysym.sym)
 			{
+			case SDLK_b:
+				r_g_toggle_boxxies();
+				break;
+
 			case SDLK_z:
 				g_in_z();
 				break;
