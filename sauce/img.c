@@ -32,7 +32,7 @@ const char* const img_path[IMG_C] =
 	"data/ani/ailin/ailin.png",
 	"data/ani/pacsatan/pacsatan.png",
 	"data/img/level_clarice.png",
-	NULL,
+	"data/img/level_labyrinth.png",
 	NULL,
 	NULL,
 	NULL,
@@ -51,7 +51,6 @@ void img_slurp(unsigned id)
 		return;
 
 	img[id] = IMG_Load(img_path[id]);
-
 	assert (img[id]); /* TODO: handling */
 }
 

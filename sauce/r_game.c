@@ -31,7 +31,7 @@ static int type_2_ani[G_ENT_TYPE_C] =
 	1,
 	2,
 	3,
-	0,
+	4,
 	0,
 };
 
