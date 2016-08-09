@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 		in_frame();
 		g_frame();
 		mix_g_frame();
-		r_color(169, 231, 255, 1);
+		r_color(169, 231, 255, 255);
 		r_clear();
 		r_game();
 		r_present();
