@@ -37,10 +37,10 @@ struct g_lvl
 struct game
 {
 	unsigned lvl_id;
+	unsigned long t;
+	unsigned long dt;
 	bool should_quit;
 };
-
-extern unsigned long g_t, g_dt;
 
 #define G_C 3
 #define G_LVL_C 8

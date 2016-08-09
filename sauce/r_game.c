@@ -44,7 +44,7 @@ void r_g_ent(unsigned i)
 		return;
 
 	r_moveto(e->boxxy.x, e->boxxy.y);
-	r_ani(type_2_ani[e->type], g_t);
+	r_ani(type_2_ani[e->type], game.t);
 }
 
 void r_g_lvl()

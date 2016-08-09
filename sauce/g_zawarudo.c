@@ -134,7 +134,7 @@ i_like_gotos:
 
 void g_zw_frame()
 {
-	g_zw_dt += g_dt;
+	g_zw_dt += game.dt;
 
 	if (g_zw_dt < G_ZW_MSPF)
 		return;

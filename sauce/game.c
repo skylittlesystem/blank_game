@@ -28,8 +28,6 @@
 #include "g_zawarudo.h"
 #include "g_ent.h"
 
-unsigned long g_t, g_dt;
-
 #define FMT "save/%u"
 
 char* const const g_path_fmt = FMT "/game.txt";
@@ -128,8 +126,8 @@ void g_in_z()
 
 static void g_tick()
 {
-	g_dt = SDL_GetTicks() - g_t;
-	g_t += g_dt;
+	game.dt = SDL_GetTicks() - game.t;
+	game.t += game.dt;
 }
 
 void g_frame()
@@ -178,8 +176,8 @@ void g_init()
 	memset(&g_lvl, 0, sizeof (g_lvl));
 	memset(&g_ent, 0, sizeof (g_ent));
 
-	g_t = 0;
-	g_dt = 0;
+	game.t = 0;
+	game.dt = 0;
 }
 
 void g_fini()
