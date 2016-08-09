@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 	g_load(0);
 
 	run = true;
-	while (run)
+	while (run && !game.should_quit)
 	{
 		in_frame();
 		g_frame();

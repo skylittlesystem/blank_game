@@ -128,6 +128,7 @@ i_like_gotos:
 				wryyy.sroller_id, wryyy.jojo_id);
 		s->v[0] = 0;
 		s->v[1] = 0;
+		g_ent_wryyy(&wryyy);
 	}
 }
 

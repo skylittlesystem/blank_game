@@ -37,6 +37,7 @@ struct g_lvl
 struct game
 {
 	unsigned lvl_id;
+	bool should_quit;
 };
 
 extern unsigned long g_t, g_dt;

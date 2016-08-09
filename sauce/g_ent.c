@@ -54,6 +54,19 @@ static void g_ent_pacsatan_think(unsigned id)
 
 static void g_ent_pacsatan_wryyy(unsigned id, struct g_zw_wryyy* wryyy)
 {
+	struct g_ent* pacsatan;
+
+	pacsatan = &g_ent[id];
+	assert (pacsatan);
+
+	if (
+			wryyy->sroller_id != pacsatan->target_id &&
+			wryyy->jojo_id != pacsatan->target_id
+	   )
+		return;
+
+
+	g_quit();
 }
 
 /* dispatch tables */

@@ -160,6 +160,11 @@ static void g_slurp(unsigned id)
 	fclose(fp);
 }
 
+void g_quit()
+{
+	game.should_quit = true;
+}
+
 void g_load(unsigned id)
 {
 	g_id = id;
