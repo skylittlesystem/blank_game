@@ -39,6 +39,7 @@ struct g_ent
 {
 	enum g_ent_type type;
 	SDL_Rect boxxy;
+	int z;
 	int v[2];
 	unsigned bmp_id;
 	unsigned target_id;

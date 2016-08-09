@@ -35,6 +35,22 @@ static int type_2_ani[G_ENT_TYPE_C] =
 	0,
 };
 
+static unsigned z_order[G_ENT_C] = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+
+static int z_cmp(const unsigned* id_a, const unsigned* id_b)
+{
+	struct g_ent* a, * b;
+
+	a = &g_ent[*id_a];
+	b = &g_ent[*id_b];
+
+	if (a->z < b->z) return -1;
+	if (a->z > b->z) return 1;
+	if (a->boxxy.y < b->boxxy.y) return -1;
+	if (a->boxxy.y > b->boxxy.y) return 1;
+	return 0;
+}
+
 void r_g_ent(unsigned i)
 {
 	struct g_ent* e;
@@ -51,8 +67,11 @@ void r_g_lvl()
 {
 	unsigned i;
 
+	qsort(z_order, G_ENT_C, sizeof (z_order[0]),
+			(int (*)(const void*, const void*)) z_cmp);
+
 	for (i = 0; i < G_ENT_C; ++i)
-		r_g_ent(i);
+		r_g_ent(z_order[i]);
 }
 
 void r_game()

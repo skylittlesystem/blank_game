@@ -82,19 +82,20 @@ static void g_lvl_slurp(unsigned id)
 
 		r = fscanf(
 				fp,
-				" %u %d %d %u %u %d %d %u %u ",
+				" %u %d %d %u %u %d %d %d %u %u ",
 				&e->type,
 				&e->boxxy.x,
 				&e->boxxy.y,
 				&e->boxxy.w,
 				&e->boxxy.h,
+				&e->z,
 				&e->v[0],
 				&e->v[1],
 				&e->bmp_id,
 				&e->target_id
 			  );
 
-		assert (r == 9); /* TODO: handling */
+		assert (r == 10); /* TODO: handling */
 	}
 
 	fclose(fp);
