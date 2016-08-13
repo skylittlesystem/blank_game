@@ -57,6 +57,8 @@ static bool trace_boxxy_vs_pixxy()
 	jb.h = jbmp->h; /* ! */
 
 	SDL_IntersectRect(&wryyy.boxxy, &jb, &b);
+	b.x -= jb.x;
+	b.y -= jb.y;
 
 	for (i = b.y; i < b.y + b.h; ++i)
 		for (k = b.x; k < b.x + b.w; ++k)
