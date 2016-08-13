@@ -41,6 +41,7 @@ struct ani ani[ANI_C];
 
 void ani_slurp(unsigned id)
 {
+	int r;
 	FILE* fp;
 	struct ani* a;
 	struct ani_frm* f;
@@ -53,33 +54,30 @@ void ani_slurp(unsigned id)
 	assert (fp); /* TODO: handling  */
 
 	a = &ani[id];
-	assert (
-		fscanf(
+	r = fscanf(
 			fp,
 			" %u %u %u %u ",
 			&a->tex_id,
 			&a->w,
 			&a->h,
 			&a->c
-		      )
-		== 4
-	       ); /* TODO: handling */
+		  );
+
+	assert (r == 4); /* TODO: handling */
 
 	lastt = 0;
 	for (i = 0, f = a->v; i < a->c; ++i, ++f)
 	{
-		assert (
-			fscanf(
+		r = fscanf(
 				fp,
 				" %u %hhu %hhu %hu ",
 				&f->t,
 				&f->i,
 				&f->j,
 				&f->sfx_id
-			      )
-			== 4
-		       ); /* TODO: handling */
+			  );
 
+		assert (r == 4); /* TODO: handling */
 		assert (lastt <= f->t); /* just in case =O3 */
 		lastt = f->t;
 	}

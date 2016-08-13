@@ -148,10 +148,12 @@ void r_ani(unsigned id, unsigned t)
 
 void r_init()
 {
+	int r;
 	memset(tex, 0, sizeof (tex));
 	r_moveto(0, 0);
 
-	assert (SDL_Init(SDL_INIT_VIDEO) == 0);
+	r = SDL_Init(SDL_INIT_VIDEO);
+	assert (r == 0); /* TODO: handling */
 
 	sdl_window = SDL_CreateWindow(
 			R_TITLE,
