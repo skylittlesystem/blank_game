@@ -56,14 +56,16 @@ void ani_slurp(unsigned id)
 	a = &ani[id];
 	r = fscanf(
 			fp,
-			" %u %u %u %u ",
+			" %u %d %d %u %u %u ",
 			&a->tex_id,
-			&a->w,
-			&a->h,
+			&a->x,
+			&a->y,
+			&a->f_w,
+			&a->f_h,
 			&a->c
 		  );
 
-	assert (r == 4); /* TODO: handling */
+	assert (r == 6); /* TODO: handling */
 
 	lastt = 0;
 	for (i = 0, f = a->v; i < a->c; ++i, ++f)

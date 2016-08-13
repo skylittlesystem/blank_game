@@ -38,8 +38,10 @@ struct ani_frm
 struct ani
 {
 	unsigned tex_id;
-	unsigned w;
-	unsigned h;
+	int x;
+	int y;
+	unsigned f_w;
+	unsigned f_h;
 	unsigned c;
 	struct ani_frm v[ANI_FRM_C];
 };

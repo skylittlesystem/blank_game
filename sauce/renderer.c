@@ -133,15 +133,15 @@ void r_ani(unsigned id, unsigned t)
 		--f;
 	}
 
-	srcrect.x = f->j * a->w;
-	srcrect.y = f->i * a->h;
-	srcrect.w = a->w;
-	srcrect.h = a->h;
+	srcrect.x = f->j * a->f_w;
+	srcrect.y = f->i * a->f_h;
+	srcrect.w = a->f_w;
+	srcrect.h = a->f_h;
 
-	dstrect.x = pointer[0];
-	dstrect.y = pointer[1];
-	dstrect.w = a->w;
-	dstrect.h = a->h;
+	dstrect.x = pointer[0] + a->x;
+	dstrect.y = pointer[1] + a->y;
+	dstrect.w = a->f_w;
+	dstrect.h = a->f_h;
 
 	SDL_RenderCopy(sdl_renderer, tex[a->tex_id], &srcrect, &dstrect);
 }
