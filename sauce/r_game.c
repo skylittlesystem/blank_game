@@ -45,10 +45,11 @@ static int z_cmp(const unsigned* id_a, const unsigned* id_b)
 	a = &g_ent[*id_a];
 	b = &g_ent[*id_b];
 
-	if (a->z < b->z) return -1;
-	if (a->z > b->z) return 1;
-	if (a->boxxy.y < b->boxxy.y) return -1;
-	if (a->boxxy.y > b->boxxy.y) return 1;
+	/* DESC sort. -1 is over 0 */
+	if (a->z > b->z) return -1;
+	if (a->z < b->z) return 1;
+	if (a->boxxy.y > b->boxxy.y) return -1;
+	if (a->boxxy.y < b->boxxy.y) return 1;
 	return 0;
 }
 
