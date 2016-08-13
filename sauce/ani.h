@@ -25,7 +25,7 @@
 #define HAS_ANI_H
 
 #define ANI_FRM_C 256
-#define ANI_C 8
+#define ANI_C 20
 
 struct ani_frm
 {

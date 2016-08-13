@@ -35,6 +35,18 @@ const char* const ani_path[ANI_C] =
 	NULL,
 	NULL,
 	NULL,
+	NULL,
+	NULL,
+	"data/ani/level_room/demo_arara.txt",
+	"data/ani/level_room/demo_cadeira.txt",
+	"data/ani/level_room/demo_cama.txt",
+	NULL,
+	NULL,
+	"data/ani/level_room/demo_livros.txt",
+	"data/ani/level_room/demo_pc.txt",
+	"data/ani/level_room/demo_personagem.txt",
+	"data/ani/level_room/demo_quarto.txt",
+	NULL,
 };
 
 struct ani ani[ANI_C];

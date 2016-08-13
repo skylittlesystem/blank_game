@@ -36,6 +36,18 @@ const char* const img_path[IMG_C] =
 	NULL,
 	NULL,
 	NULL,
+	NULL,
+	NULL,
+	"data/img/level_room/demo_arara.png",
+	"data/img/level_room/demo_cadeira.png",
+	"data/img/level_room/demo_cama.png",
+	"data/img/level_room/demo_colisao_elementos.png",
+	"data/img/level_room/demo_colisao_quarto.png",
+	"data/img/level_room/demo_livros.png",
+	"data/img/level_room/demo_pc.png",
+	"data/img/level_room/demo_personagem.png",
+	"data/img/level_room/demo_quarto.png",
+	NULL,
 };
 
 SDL_Surface* img[IMG_C];

@@ -31,7 +31,7 @@ const char* const mus_path[MUS_C] =
 {
 	NULL,
 	"data/mus/level_clarice.mp3",
-	NULL,
+	"data/mus/level_room.mp3",
 	NULL,
 	NULL,
 	NULL,

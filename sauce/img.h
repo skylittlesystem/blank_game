@@ -26,7 +26,7 @@
 
 #include <SDL.h>
 
-#define IMG_C 8
+#define IMG_C 20
 extern const char* const img_path[IMG_C];
 extern SDL_Surface* img[IMG_C];
 
