@@ -25,7 +25,7 @@
 #define HAS_ANI_H
 
 #define ANI_FRM_C 256
-#define ANI_C 20
+#define ANI_C 32
 
 #include "id_2_path.h"
 

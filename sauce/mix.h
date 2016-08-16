@@ -29,7 +29,7 @@
 
 #define MIX_HZ 44100
 
-#define MUS_C 8
+#define MUS_C 32
 extern const char* const mus_id_2_path_path;
 extern char mus_id_2_path[MUS_C][ID_2_PATH_LEN];
 extern Mix_Music* mus[MUS_C];
@@ -37,7 +37,7 @@ extern Mix_Music* mus[MUS_C];
 #define mus_id_2_path_slurp() \
 	id_2_path_slurp(mus_id_2_path_path, ANI_C, mus_id_2_path[0])
 
-#define SFX_C 8
+#define SFX_C 32
 extern const char* const sfx_id_2_path_path;
 extern char sfx_id_2_path[SFX_C][ID_2_PATH_LEN];
 extern Mix_Chunk* sfx[SFX_C];

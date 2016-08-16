@@ -28,7 +28,7 @@
 
 #include "id_2_path.h"
 
-#define IMG_C 20
+#define IMG_C 32
 extern const char* const img_id_2_path_path;
 extern char img_id_2_path[IMG_C][ID_2_PATH_LEN];
 extern const char* const img_path[IMG_C];
