@@ -105,17 +105,16 @@ void sfx_slurp_all()
 /* mix */
 void mix_init()
 {
+	int r;
+
 	SDL_Init(SDL_INIT_AUDIO);
-	assert (Mix_Init(MIX_INIT_MP3) & MIX_INIT_MP3); /* TODO: handling */
-	assert (
-			Mix_OpenAudio(
-				MIX_HZ,
-				MIX_DEFAULT_FORMAT,
-				2,
-				4096
-				)
-			== 0
-	       ); /* TODO: handling */
+
+	r = Mix_Init(MIX_INIT_MP3);
+	assert (r & MIX_INIT_MP3); /* TODO: handling */
+
+	r = Mix_OpenAudio(MIX_HZ, MIX_DEFAULT_FORMAT, 2, 4096);
+	assert (r == 0); /* TODO: handling */
+
 	memset(sfx, 0, sizeof (sfx));
 	memset(mus, 0, sizeof (mus));
 }
