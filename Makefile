@@ -25,6 +25,7 @@ LDFLAGS := \
 LD := $(LD)
 
 OBJ := \
+	build/id_2_path.o \
 	build/mix.o \
 	build/mix_game.o \
 	build/img.o \

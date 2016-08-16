@@ -22,51 +22,30 @@
  */
 
 #include <assert.h>
-#include <SDL_image.h>
+#include <stdio.h>
+#include <string.h>
+#include "id_2_path.h"
 
-#include "img.h"
-
-const char* const img_id_2_path_path = "data/img_id_2_path.txt";
-char img_id_2_path[IMG_C][ID_2_PATH_LEN];
-SDL_Surface* img[IMG_C];
-
-void img_free(unsigned id)
+void id_2_path_slurp(const char* pp, unsigned pc, char* pv)
 {
-	SDL_FreeSurface(img[id]);
-}
+	FILE* fp;
+	int r;
 
-void img_slurp(unsigned id)
-{
-	if (!img_id_2_path[id][0])
-		return;
+	fp = fopen(pp, "r");
+	assert (fp); /* TODO: handling */
 
-	img[id] = IMG_Load(img_id_2_path[id]);
-	assert (img[id]); /* TODO: handling */
-}
+	memset (pv, 0, sizeof (pc * ID_2_PATH_LEN));
 
-void img_free_all()
-{
-	unsigned id;
+	while (!feof(fp))
+	{
+		unsigned id;
 
-	for (id = 0; id < IMG_C; ++id)
-		img_free(id);
-}
+		r = fscanf(fp, " %u ", &id);
+		assert (r == 1); /* TODO: handling */
 
-void img_slurp_all()
-{
-	unsigned id;
+		r = fscanf(fp, " %s ", &pv[id * ID_2_PATH_LEN]);
+		assert (r == 1); /* TODO: handling */
+	}
 
-	for (id = 0; id < IMG_C; ++id)
-		img_slurp(id);
-}
-
-void img_init()
-{
-	assert (IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG); /* TODO: handling */
-	memset(img, 0, sizeof (img));
-}
-
-void img_fini()
-{
-	IMG_Quit();
+	fclose(fp);
 }

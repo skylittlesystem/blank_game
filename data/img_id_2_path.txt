@@ -1,0 +1,14 @@
+0	data/img/naught.png
+1	data/ani/ailin/ailin.png
+2	data/ani/pacsatan/pacsatan.png
+3	data/img/level_clarice.png
+4	data/img/level_labyrinth.png
+10	data/img/level_room/demo_arara.png
+11	data/img/level_room/demo_cadeira.png
+12	data/img/level_room/demo_cama.png
+13	data/img/level_room/demo_colisao_elementos.png
+14	data/img/level_room/demo_colisao_quarto.png
+15	data/img/level_room/demo_livros.png
+16	data/img/level_room/demo_pc.png
+17	data/img/level_room/demo_personagem.png
+18	data/img/level_room/demo_quarto.png

@@ -21,52 +21,11 @@
  *
  */
 
-#include <assert.h>
-#include <SDL_image.h>
+#ifndef HAS_ID_2_PATH_H
+#define HAS_ID_2_PATH_H
 
-#include "img.h"
+#define ID_2_PATH_LEN 128
 
-const char* const img_id_2_path_path = "data/img_id_2_path.txt";
-char img_id_2_path[IMG_C][ID_2_PATH_LEN];
-SDL_Surface* img[IMG_C];
+void id_2_path_slurp(const char* pp, unsigned pc, char* pv);
 
-void img_free(unsigned id)
-{
-	SDL_FreeSurface(img[id]);
-}
-
-void img_slurp(unsigned id)
-{
-	if (!img_id_2_path[id][0])
-		return;
-
-	img[id] = IMG_Load(img_id_2_path[id]);
-	assert (img[id]); /* TODO: handling */
-}
-
-void img_free_all()
-{
-	unsigned id;
-
-	for (id = 0; id < IMG_C; ++id)
-		img_free(id);
-}
-
-void img_slurp_all()
-{
-	unsigned id;
-
-	for (id = 0; id < IMG_C; ++id)
-		img_slurp(id);
-}
-
-void img_init()
-{
-	assert (IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG); /* TODO: handling */
-	memset(img, 0, sizeof (img));
-}
-
-void img_fini()
-{
-	IMG_Quit();
-}
+#endif

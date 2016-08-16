@@ -26,9 +26,16 @@
 
 #include <SDL.h>
 
+#include "id_2_path.h"
+
 #define IMG_C 20
+extern const char* const img_id_2_path_path;
+extern char img_id_2_path[IMG_C][ID_2_PATH_LEN];
 extern const char* const img_path[IMG_C];
 extern SDL_Surface* img[IMG_C];
+
+#define img_id_2_path_slurp() \
+	id_2_path_slurp(img_id_2_path_path, ANI_C, img_id_2_path[0])
 
 void img_free(unsigned i);
 void img_slurp(unsigned i);

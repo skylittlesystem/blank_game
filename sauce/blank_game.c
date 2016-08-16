@@ -45,7 +45,10 @@ void main_quit()
 /* Teh main function!!11!1ONE */
 int main(int argc, char *argv[])
 {
+	img_id_2_path_slurp();
 	img_slurp_all();
+
+	ani_id_2_path_slurp();
 	ani_slurp_all();
 
 	g_init();
@@ -56,6 +59,8 @@ int main(int argc, char *argv[])
 
 	mix_init();
 	mix_g_init();
+
+	mus_id_2_path_slurp();
 	mus_slurp_all();
 
 	g_load(0);

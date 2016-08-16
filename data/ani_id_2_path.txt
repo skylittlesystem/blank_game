@@ -1,0 +1,12 @@
+0	data/ani/naught/naught.txt
+1	data/ani/ailin/ailin.txt
+2	data/ani/pacsatan/pacsatan.txt
+3	data/ani/level_clarice/level_clarice.txt
+4	data/ani/level_labyrinth/level_labyrinth.txt
+10	data/ani/level_room/demo_arara.txt
+11	data/ani/level_room/demo_cadeira.txt
+12	data/ani/level_room/demo_cama.txt
+15	data/ani/level_room/demo_livros.txt
+16	data/ani/level_room/demo_pc.txt
+17	data/ani/level_room/demo_personagem.txt
+18	data/ani/level_room/demo_quarto.txt

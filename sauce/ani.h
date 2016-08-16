@@ -27,6 +27,8 @@
 #define ANI_FRM_C 256
 #define ANI_C 20
 
+#include "id_2_path.h"
+
 struct ani_frm
 {
 	unsigned t;
@@ -46,8 +48,12 @@ struct ani
 	struct ani_frm v[ANI_FRM_C];
 };
 
-extern const char* const ani_path[ANI_C];
+extern const char* const ani_id_2_path_path;
+extern char ani_id_2_path[ANI_C][ID_2_PATH_LEN];
 extern struct ani ani[ANI_C];
+
+#define ani_id_2_path_slurp() \
+	id_2_path_slurp(ani_id_2_path_path, ANI_C, ani_id_2_path[0])
 
 void ani_slurp(unsigned id);
 void ani_slurp_all();

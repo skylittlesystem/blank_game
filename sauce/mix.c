@@ -27,32 +27,12 @@
 
 #include "mix.h"
 
-const char* const mus_path[MUS_C] =
-{
-	NULL,
-	"data/mus/level_clarice.mp3",
-	"data/mus/level_room.mp3",
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-};
-
+const char* const mus_id_2_path_path = "data/mus_id_2_path.txt";
+char mus_id_2_path[MUS_C][ID_2_PATH_LEN];
 Mix_Music* mus[MUS_C];
 
-const char* const sfx_path[SFX_C] =
-{
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-};
-
+const char* const sfx_id_2_path_path = "data/sfx_id_2_path.txt";
+char sfx_id_2_path[SFX_C][ID_2_PATH_LEN];
 Mix_Chunk* sfx[SFX_C];
 
 /* mus */
@@ -68,11 +48,11 @@ void mus_free(unsigned id)
 
 void mus_slurp(unsigned id)
 {
-	if (mus_path[id])
-	{
-		mus[id] = Mix_LoadMUS(mus_path[id]);
-		assert (mus[id]); /* TODO: handling */
-	}
+	if (!mus_id_2_path[id][0])
+		return;
+
+	mus[id] = Mix_LoadMUS(mus_id_2_path[id]);
+	assert (mus[id]); /* TODO: handling */
 }
 
 void mus_free_all()
@@ -99,11 +79,11 @@ void sfx_free(unsigned id)
 
 void sfx_slurp(unsigned id)
 {
-	if (sfx_path[id])
-	{
-		sfx[id] = Mix_LoadWAV(sfx_path[id]);
-		assert (sfx[id]); /* TODO: handling */
-	}
+	if (!sfx_id_2_path[id][0])
+		return;
+
+	sfx[id] = Mix_LoadWAV(sfx_id_2_path[id]);
+	assert (sfx[id]); /* TODO: handling */
 }
 
 void sfx_free_all()

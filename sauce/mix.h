@@ -25,16 +25,25 @@
 #define HAS_MIX_H
 
 #include <SDL_mixer.h>
+#include "id_2_path.h"
 
 #define MIX_HZ 44100
 
 #define MUS_C 8
-extern const char* const mus_path[MUS_C];
+extern const char* const mus_id_2_path_path;
+extern char mus_id_2_path[MUS_C][ID_2_PATH_LEN];
 extern Mix_Music* mus[MUS_C];
 
+#define mus_id_2_path_slurp() \
+	id_2_path_slurp(mus_id_2_path_path, ANI_C, mus_id_2_path[0])
+
 #define SFX_C 8
-extern const char* const sfx_path[SFX_C];
+extern const char* const sfx_id_2_path_path;
+extern char sfx_id_2_path[SFX_C][ID_2_PATH_LEN];
 extern Mix_Chunk* sfx[SFX_C];
+
+#define sfx_id_2_path_slurp() \
+	id_2_path_slurp(sfx_id_2_path_path, ANI_C, sfx_id_2_path[0])
 
 /* mus */
 void mus_play(unsigned i);

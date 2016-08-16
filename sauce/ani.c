@@ -25,30 +25,8 @@
 #include <stdio.h>
 #include "ani.h"
 
-const char* const ani_path[ANI_C] =
-{
-	"data/ani/naught/naught.txt",
-	"data/ani/ailin/ailin.txt",
-	"data/ani/pacsatan/pacsatan.txt",
-	"data/ani/level_clarice/level_clarice.txt",
-	"data/ani/level_labyrinth/level_labyrinth.txt",
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	"data/ani/level_room/demo_arara.txt",
-	"data/ani/level_room/demo_cadeira.txt",
-	"data/ani/level_room/demo_cama.txt",
-	NULL,
-	NULL,
-	"data/ani/level_room/demo_livros.txt",
-	"data/ani/level_room/demo_pc.txt",
-	"data/ani/level_room/demo_personagem.txt",
-	"data/ani/level_room/demo_quarto.txt",
-	NULL,
-};
-
+const char* const ani_id_2_path_path = "data/ani_id_2_path.txt";
+char ani_id_2_path[ANI_C][ID_2_PATH_LEN];
 struct ani ani[ANI_C];
 
 void ani_slurp(unsigned id)
@@ -59,10 +37,10 @@ void ani_slurp(unsigned id)
 	struct ani_frm* f;
 	unsigned i, lastt;
 
-	if (!ani_path[id])
+	if (!ani_id_2_path[id][0])
 		return;
 
-	fp = fopen(ani_path[id], "rb");
+	fp = fopen(ani_id_2_path[id], "rb");
 	assert (fp); /* TODO: handling  */
 
 	a = &ani[id];
