@@ -1,7 +1,3 @@
-#include <assert.h>
-#include <SDL.h>
-#include <SDL_mixer.h>
-
 /*
  * Copyright (c) 2016 LUDIN
  *
@@ -24,6 +20,10 @@
  * IN THE SOFTWARE.
  *
  */
+
+#include <assert.h>
+#include <SDL.h>
+#include <SDL_mixer.h>
 
 #include "mix.h"
 
