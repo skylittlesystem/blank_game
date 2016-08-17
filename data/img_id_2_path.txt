@@ -12,3 +12,9 @@
 16	data/img/level_room/demo_pc.png
 17	data/img/level_room/demo_personagem.png
 18	data/img/level_room/demo_quarto.png
+20	data/img/level_corridor/demo_corredor_lateral1.png
+21	data/img/level_corridor/demo_corredor_lateral1_colisao.png
+22	data/img/level_corridor/demo_corredor_lateral2.png
+23	data/img/level_corridor/demo_corredor_lateral2_colisao.png
+24	data/img/level_corridor/demo_corredor_meio.png
+25	data/img/level_corridor/demo_corredor_meio_colisao.png

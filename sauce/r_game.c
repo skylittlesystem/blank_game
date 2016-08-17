@@ -46,6 +46,12 @@ static int type_2_ani[G_ENT_TYPE_C] =
 	16,
 	17,
 	18,
+	0,
+	20,
+	0,
+	22,
+	0,
+	24,
 };
 
 static unsigned z_order[G_ENT_C] = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };

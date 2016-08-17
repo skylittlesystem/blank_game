@@ -36,7 +36,7 @@ const char* const g_lvl_path_fmt[G_LVL_C] =
 	FMT "/lvl_clarice.txt",
 	FMT "/lvl_labyrinth.txt",
 	FMT "/lvl_room.txt",
-	NULL,
+	FMT "/lvl_corridor.txt",
 	NULL,
 	NULL,
 	NULL,
