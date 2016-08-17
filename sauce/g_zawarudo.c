@@ -41,7 +41,7 @@ static bool trace_boxxy_vs_boxxy()
 
 static bool trace_boxxy_vs_pixxy()
 {
-	unsigned i, k;
+	int i, k;
 	struct g_ent* j;
 	SDL_Surface* jbmp;
 	SDL_Rect jb, b;
