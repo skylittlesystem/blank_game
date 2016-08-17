@@ -79,14 +79,17 @@ void r_g_toggle_boxxies()
 
 void r_g_ent(unsigned i)
 {
+	int x, y;
 	struct g_ent* e;
 	e = &g_ent[i];
 
 	if (e->type == G_ENT_NAUGHT)
 		return;
 
+	x =  R_W/2 - g_ent[0].boxxy.x;
+	y =  R_H/2 - g_ent[0].boxxy.y;
 
-	r_moveto(e->boxxy.x, e->boxxy.y);
+	r_moveto(e->boxxy.x + x, e->boxxy.y + y);
 
 	if (show_boxxies)
 	{
