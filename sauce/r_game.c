@@ -79,22 +79,25 @@ void r_g_toggle_boxxies()
 
 void r_g_ent(unsigned i)
 {
-	int x, y;
 	struct g_ent* e;
 	e = &g_ent[i];
 
 	if (e->type == G_ENT_NAUGHT)
 		return;
 
-	x =  R_W/2 - g_ent[0].boxxy.x;
-	y =  R_H/2 - g_ent[0].boxxy.y;
+	SDL_Rect boxxy = {
+		e->boxxy.x + R_W/2 - g_ent[0].boxxy.x,
+		e->boxxy.y + R_H/2 - g_ent[0].boxxy.y,
+		e->boxxy.w,
+		e->boxxy.h
+	};
 
-	r_moveto(e->boxxy.x + x, e->boxxy.y + y);
+	r_moveto(boxxy.x, boxxy.y);
 
 	if (show_boxxies)
 	{
 		r_color(255, 0, 0, 255);
-		r_boxxy(&e->boxxy);
+		r_boxxy(&boxxy);
 	}
 
 	r_ani(type_2_ani[e->type], game.t);
