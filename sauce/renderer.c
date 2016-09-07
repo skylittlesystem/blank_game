@@ -41,6 +41,12 @@ void r_moveto(int x, int y)
 	pointer[1] = y;
 }
 
+void r_translate(int x, int y)
+{
+	pointer[0] += x;
+	pointer[1] += y;
+}
+
 void r_color(
 		unsigned char r,
 		unsigned char g,
@@ -61,18 +67,31 @@ void r_present()
 	SDL_RenderPresent(sdl_renderer);
 }
 
-void r_tex(unsigned id)
+void r_subtex(unsigned id, SDL_Rect* srcrect)
 {
 	SDL_Rect dstrect =
 	{
 		pointer[0],
 		pointer[1],
+		srcrect->w,
+		srcrect->h,
+	};
+
+	SDL_RenderCopy(sdl_renderer, tex[id], srcrect, &dstrect);
+}
+
+void r_tex(unsigned id)
+{
+	SDL_Rect srcrect =
+	{
+		0,
+		0,
 		0,
 		0,
 	};
 
-	SDL_QueryTexture(tex[id], NULL, NULL, &dstrect.w, &dstrect.h);
-	SDL_RenderCopy(sdl_renderer, tex[id], NULL, &dstrect);
+	SDL_QueryTexture(tex[id], NULL, NULL, &srcrect.w, &srcrect.h);
+	r_subtex(id, &srcrect);
 }
 
 void r_tex_load(unsigned id)
@@ -111,7 +130,7 @@ void r_ani(unsigned id, unsigned t)
 {
 	struct ani* a;
 	struct ani_frm* f;
-	SDL_Rect srcrect, dstrect;
+	SDL_Rect srcrect;
 	unsigned t_c;
 
 	a = &ani[id];
@@ -138,12 +157,9 @@ void r_ani(unsigned id, unsigned t)
 	srcrect.w = a->f_w;
 	srcrect.h = a->f_h;
 
-	dstrect.x = pointer[0] + a->x;
-	dstrect.y = pointer[1] + a->y;
-	dstrect.w = a->f_w;
-	dstrect.h = a->f_h;
-
-	SDL_RenderCopy(sdl_renderer, tex[a->tex_id], &srcrect, &dstrect);
+	r_translate( a->x,  a->y);
+	r_subtex(a->tex_id, &srcrect);
+	r_translate(-a->x, -a->y);
 }
 
 void r_init()

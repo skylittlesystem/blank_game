@@ -33,7 +33,9 @@
 #include <SDL.h>
 
 void r_moveto(int x, int y);
+void r_translate(int x, int y);
 #define r_movetov(v) r_moveto(v[0], v[1])
+#define r_translatev(v) r_translate(v[0], v[1])
 void r_color(
 		unsigned char r,
 		unsigned char g,
@@ -43,6 +45,7 @@ void r_color(
 #define r_colorv(v) r_color(v[0], v[1], v[2], v[3])
 void r_clear();
 void r_present();
+void r_subtex(unsigned id, SDL_Rect* srcrect);
 void r_tex(unsigned id);
 void r_tex_load(unsigned id);
 void r_tex_load_all();
