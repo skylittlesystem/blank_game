@@ -21,8 +21,17 @@
  *
  */
 
-#ifndef HAS_G_DIALOG_H
-#define HAS_G_DIALOG_H
+#ifndef HAS_R_G_DIALOG_H
+#define HAS_R_G_DIALOG_H
+
+#include "renderer.h"
+
+#define R_G_DIALOG_W (R_W)
+#define R_G_DIALOG_H (R_H / 3)
+#define R_G_D_CH_M 16
+#define R_G_D_CH_N 16
+#define R_G_D_CH_W 16
+#define R_G_D_CH_H 16
 
 void r_g_dialog();
 

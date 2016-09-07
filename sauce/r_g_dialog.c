@@ -24,39 +24,38 @@
 #include "renderer.h"
 #include "g_dialog.h"
 #include "r_g_dialog.h"
-#include "ani.h"
-
-/* FIXME: this file is so lame */
 
 void r_g_dialog()
 {
-	struct ani* boxxy, * font;
 	unsigned i, j;
-	int p[2];
 
 	if (g_dialog.hidden)
 		return;
 
-	boxxy = &ani[30];
-	font = &ani[31];
-
-	p[0] = 0;
-	p[1] = R_H - boxxy->f_h;
-
-	r_movetov(p);
+	r_moveto(0, R_H - R_G_DIALOG_H);
 	r_ani(30, 0);
 
-	p[0] += font->f_w;
-	p[1] += font->f_h;
+	r_translate(R_G_D_CH_W, R_G_D_CH_H);
 
 	for (i = 0; i < G_DIALOG_H; ++i)
 	{
 		for (j = 0; j < G_DIALOG_W; ++j)
 		{
-			r_moveto(p[0] + (j * font->f_w), p[1] + (i * font->f_h));	
-			r_ani(31, g_dialog.text[i][j]);
+			unsigned char* ch;
+			ch = (unsigned char*) &g_dialog.text[i][j];
+
+			SDL_Rect srcrect =
+			{
+				((*ch) % R_G_D_CH_N) * R_G_D_CH_W,
+				((*ch) / R_G_D_CH_N) * R_G_D_CH_H,
+				R_G_D_CH_W,
+				R_G_D_CH_H,
+			};
+
+			r_subtex(31, &srcrect);
+			r_translate(R_G_D_CH_W, 0);
 		}
+
+		r_translate(-(G_DIALOG_W * R_G_D_CH_W), R_G_D_CH_H);
 	}
-	
-	
 }

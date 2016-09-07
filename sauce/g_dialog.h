@@ -26,7 +26,7 @@
 
 #include <stdbool.h>
 
-#define G_DIALOG_W 10
+#define G_DIALOG_W 18
 #define G_DIALOG_H 4
 
 struct g_dialog
