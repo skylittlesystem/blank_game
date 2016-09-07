@@ -18,3 +18,5 @@
 23	data/img/level_corridor/demo_corredor_lateral2_colisao.png
 24	data/img/level_corridor/demo_corredor_meio.png
 25	data/img/level_corridor/demo_corredor_meio_colisao.png
+30	data/img/dialog/boxxy.png
+31	data/img/dialog/font.png

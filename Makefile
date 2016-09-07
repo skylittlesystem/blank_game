@@ -33,8 +33,10 @@ OBJ := \
 	build/game.o \
 	build/g_zawarudo.o \
 	build/g_ent.o \
+	build/g_dialog.o \
 	build/renderer.o \
 	build/r_game.o \
+	build/r_g_dialog.o \
 	build/in.o \
 	build/blank_game.o \
 

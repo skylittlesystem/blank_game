@@ -13,3 +13,5 @@
 20	data/ani/level_corridor/demo_corredor_lateral1.txt
 22	data/ani/level_corridor/demo_corredor_lateral2.txt
 24	data/ani/level_corridor/demo_corredor_meio.txt
+30	data/ani/dialog/boxxy.txt
+31	data/ani/dialog/font.txt

@@ -24,6 +24,7 @@
 #include "renderer.h"
 #include "game.h"
 #include "r_game.h"
+#include "r_g_dialog.h"
 
 static int type_2_ani[G_ENT_TYPE_C] =
 {
@@ -121,4 +122,5 @@ void r_g_lvl()
 void r_game()
 {
 	r_g_lvl();
+	r_g_dialog();
 }
